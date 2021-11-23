@@ -71,7 +71,6 @@ class ResultCreater:
         return resultList
 
 
-
     def getSupplierParam(self, listWithsupplierLists, supplier, article):
         for supplierList in listWithsupplierLists:
             supKeys = list(supplierList.keys())
@@ -80,7 +79,6 @@ class ResultCreater:
                     if str(supplierProduct.article) == article:
                         return supplierProduct.price
         return 0
-
 
 
     def getResultExcelFile(self, resultList):
@@ -94,9 +92,3 @@ class ResultCreater:
                 return item
         ui = unloadedCheescakeItem.UnloadedCheescakeItem()
         return ui
-
-
-
-
-
-

@@ -3,11 +3,11 @@ import supplierProduct
 
 class SupplierParser():
 
-    def __init__(self, path_to_file: str, article_column: int, price_column: int):
+    def __init__(self, path_to_file: str, article_column: int, price_column: int, sheet=0):
         self.path_to_file = path_to_file
         self.article_column = article_column
         self.price_column = price_column
-        self.sheet = 0
+        self.sheet = sheet
 
     def getProductListFromXlsx(self):
         product_list = []

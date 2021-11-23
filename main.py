@@ -5,11 +5,10 @@ import unloadedCheescakeParser
 
 
 def main():
-    darsiFile = supplierParser.SupplierParser("_Прайс 21 Дарси.xlsx",2,4)
-    darsiFile.sheet =0
+    darsiFile = supplierParser.SupplierParser("_Прайс 21 Дарси.xlsx", 2, 4, 0)
     darsiProducts = darsiFile.getProductListFromXlsx()
 
-    mirInstrumentaFile = supplierParser.SupplierParser("Прайс Мир инструмента.xls",0,8)
+    mirInstrumentaFile = supplierParser.SupplierParser("Прайс Мир инструмента.xls", 0, 8, 0)
     mirInstrumentaProducts = mirInstrumentaFile.getProductListFromXlsx()
 
     compFile = comparisionParser.ComparisionParser("КГК таблица соответствий.xlsx")
@@ -24,9 +23,6 @@ def main():
     rs = resultCreater.ResultCreater(supplierLists,uchList, complist )
     rList =rs.createResultList()
     rs.getResultExcelFile(rList)
-
-
-
 
     print(f'в rList найдено {len(rList)} товаров')
     print(f'в файле Прайс Мир инструмента.xls найдено {len(mirInstrumentaProducts)} товаров')
