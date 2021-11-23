@@ -1,5 +1,5 @@
 import pandas as pd
-import supplierProduct
+from model import supplierProduct
 
 class SupplierParser():
 

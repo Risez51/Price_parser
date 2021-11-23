@@ -1,10 +1,9 @@
-import comparisionParser
-import resultCreater
-import supplierParser
-import unloadedCheescakeParser
-
+from model import resultCreater, supplierParser, unloadedCheescakeParser, comparisionParser
 
 def main():
+    runModel()
+
+def runModel():
     darsiFile = supplierParser.SupplierParser("_Прайс 21 Дарси.xlsx", 2, 4, 0)
     darsiProducts = darsiFile.getProductListFromXlsx()
 
@@ -20,8 +19,8 @@ def main():
     uchFile = unloadedCheescakeParser.UnloadedCheescakeParser("china2.xlsx")
     uchList = uchFile.getUnloadedCheescakeList()
 
-    rs = resultCreater.ResultCreater(supplierLists,uchList, complist )
-    rList =rs.createResultList()
+    rs = resultCreater.ResultCreater(supplierLists, uchList, complist)
+    rList = rs.createResultList()
     rs.getResultExcelFile(rList)
 
     print(f'в rList найдено {len(rList)} товаров')
@@ -29,6 +28,7 @@ def main():
     print(f'в файле _Прайс 21 Дарси.xlsx найдено {len(darsiProducts)} товаров')
     print(f'в файле КГК таблица соответствий.xlsx найдено {len(complist)} товаров')
     print(f'в файле выгрузка_чизкейк.xlsx найдено {len(uchList)} товаров')
+
 
 if __name__ == "__main__":
         main()

@@ -1,5 +1,6 @@
-import comparisionItem
+from model import comparisionItem
 import pandas as pd
+
 class ComparisionParser():
 
     def __init__(self, path_to_file):

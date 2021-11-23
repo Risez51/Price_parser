@@ -1,7 +1,5 @@
-import supplierProduct
 import pandas as pd
-
-import unloadedCheescakeItem
+from model import unloadedCheescakeItem
 
 
 class ResultCreater:
