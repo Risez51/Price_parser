@@ -11,19 +11,21 @@ class SupplierParser():
 
     def getProductListFromXlsx(self):
         product_list = []
-        #excelFile = pd.ExcelFile(self.path_to_file)
-        #df = excelFile.parse(sheet_name=self.sheet)
+        excelFile = pd.ExcelFile(self.path_to_file)
+        df = excelFile.parse(sheet_name=self.sheet)
 
-        df = pd.read_excel(self.path_to_file)
+        #df = pd.read_excel(self.path_to_file)
         arr_with_stock_Excel_data = df.to_numpy()
 
         for item in arr_with_stock_Excel_data:
             if self.isProduct(item[self.article_column],
                               item[self.price_column]):
-                product = supplierProduct.SupplierProduct(item[self.article_column],
+                product = supplierProduct.SupplierProduct(str(item[self.article_column]).strip(),
                                                           item[self.price_column])
                 product_list.append(product)
         return product_list
+
+
 
     def isProduct(self, article, price):
         if len(str(article)) == 0 or article == 0 or str(article) == "nan":
@@ -31,3 +33,13 @@ class SupplierParser():
         if isinstance(price, str) or str(price) == "nan":
             return False
         return True
+
+
+
+
+    def getList(self, listik):
+        resultList = []
+        for product in listik:
+            resultList.append({"артикул": product.article,
+                               "цена": product.price})
+        return resultList

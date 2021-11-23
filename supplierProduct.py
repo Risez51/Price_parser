@@ -1,7 +1,7 @@
 class SupplierProduct:
 
     def __init__(self, article, price):
-        self.article = article
+        self.article = str(article)
         self.price = price
 
 

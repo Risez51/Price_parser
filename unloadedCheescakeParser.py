@@ -16,7 +16,7 @@ class UnloadedCheescakeParser():
         resList = []
         for item in arr_with_stock_Excel_data:
             ichItem = unloadedCheescakeItem.UnloadedCheescakeItem()
-            ichItem.article = item[0]
+            ichItem.article = str(item[0]).strip()
             ichItem.name = item[1]
             ichItem.purchase_price = item[2]
             ichItem.supplier = item[3]
