@@ -9,7 +9,6 @@ class UnloadedCheescakeParser():
         self.path_to_file = path_to_file
 
     def getUnloadedCheescakeList(self):
-        comparisionList = []
         excelFile = pd.ExcelFile(self.path_to_file)
         df = excelFile.parse()
         arr_with_stock_Excel_data = df.to_numpy()
@@ -19,10 +18,10 @@ class UnloadedCheescakeParser():
             ichItem.article = str(item[0]).strip()
             ichItem.name = item[1]
             ichItem.purchase_price = item[2]
-            ichItem.supplier = item[3]
-            ichItem.orderDate = item[4]
-            ichItem.stock = item[5]
-            ichItem.selling_price = item[6]
-            ichItem.group = item[7]
+            ichItem.supplier = item[4]
+            ichItem.orderDate = item[5].date()
+            ichItem.stock = item[6]
+            ichItem.selling_price = item[7]
+            ichItem.group = item[8]
             resList.append(ichItem)
         return resList

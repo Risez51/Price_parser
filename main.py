@@ -18,7 +18,7 @@ def main():
     supplierLists.append({"Дарси 1": darsiProducts})
     supplierLists.append({"Мир инструментов 1": mirInstrumentaProducts})
 
-    uchFile = unloadedCheescakeParser.UnloadedCheescakeParser("выгрузка_чизкейк.xlsx")
+    uchFile = unloadedCheescakeParser.UnloadedCheescakeParser("china2.xlsx")
     uchList = uchFile.getUnloadedCheescakeList()
 
     rs = resultCreater.ResultCreater(supplierLists,uchList, complist )

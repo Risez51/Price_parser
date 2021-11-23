@@ -84,8 +84,8 @@ class ResultCreater:
 
 
     def getResultExcelFile(self, resultList):
-        df = pd.DataFrame(data=resultList, index=None)
-        df.to_excel('resultFile.xlsx')
+        df = pd.DataFrame(data=resultList)
+        df.to_excel('resultFile.xlsx', index=False)
 
 
     def get_uchItem(self, article, uchList: list):

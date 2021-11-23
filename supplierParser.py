@@ -13,8 +13,6 @@ class SupplierParser():
         product_list = []
         excelFile = pd.ExcelFile(self.path_to_file)
         df = excelFile.parse(sheet_name=self.sheet)
-
-        #df = pd.read_excel(self.path_to_file)
         arr_with_stock_Excel_data = df.to_numpy()
 
         for item in arr_with_stock_Excel_data:
@@ -33,9 +31,6 @@ class SupplierParser():
         if isinstance(price, str) or str(price) == "nan":
             return False
         return True
-
-
-
 
     def getList(self, listik):
         resultList = []
