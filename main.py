@@ -1,22 +1,31 @@
 from model import resultCreater, supplierParser, unloadedCheescakeParser, comparisionParser
-
+from view import mainForm
+import wx
 def main():
-    runModel()
+    #runModel()
+
+    # Здесь происходит создание экземпляра нашей программы, которая впоследствии и будет запущена.
+    app = wx.App()
+    mainWindow = mainForm.MainForm(None, "Прайс-парсер")
+    mainWindow.Center()
+    mainWindow.Show()
+    app.MainLoop()
+
 
 def runModel():
-    darsiFile = supplierParser.SupplierParser("_Прайс 21 Дарси.xlsx", 2, 4, 0)
+    darsiFile = supplierParser.SupplierParser("C:\\Users\\OperTech\\pythonProject\\pythonProject\\Price_parser\\_Прайс 21 Дарси.xlsx", 2, 4, 0)
     darsiProducts = darsiFile.getProductListFromXlsx()
 
-    mirInstrumentaFile = supplierParser.SupplierParser("Прайс Мир инструмента.xls", 0, 8, 0)
+    mirInstrumentaFile = supplierParser.SupplierParser("C:\\Users\\OperTech\\pythonProject\\pythonProject\\Price_parser\\Прайс Мир инструмента.xls", 0, 8, 0)
     mirInstrumentaProducts = mirInstrumentaFile.getProductListFromXlsx()
 
-    compFile = comparisionParser.ComparisionParser("КГК таблица соответствий.xlsx")
+    compFile = comparisionParser.ComparisionParser("C:\\Users\\OperTech\\pythonProject\\pythonProject\\Price_parser\\КГК таблица соответствий.xlsx")
     complist = compFile.getComparisionList()
     supplierLists = []
     supplierLists.append({"Дарси 1": darsiProducts})
     supplierLists.append({"Мир инструментов 1": mirInstrumentaProducts})
 
-    uchFile = unloadedCheescakeParser.UnloadedCheescakeParser("china2.xlsx")
+    uchFile = unloadedCheescakeParser.UnloadedCheescakeParser("C:\\Users\\OperTech\\pythonProject\\pythonProject\\Price_parser\\china2.xlsx")
     uchList = uchFile.getUnloadedCheescakeList()
 
     rs = resultCreater.ResultCreater(supplierLists, uchList, complist)
@@ -32,4 +41,3 @@ def runModel():
 
 if __name__ == "__main__":
         main()
-
