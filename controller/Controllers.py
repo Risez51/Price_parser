@@ -2,5 +2,6 @@ class Controllers:
     def __init__(self, viewData):
         self.viewData = viewData
 
-    def testo(self):
+    def getResultFile(self):
+
         pass

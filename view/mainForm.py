@@ -70,7 +70,7 @@ class MainForm(wx.Frame):
         self.hbox3 = wx.BoxSizer(wx.HORIZONTAL)
         self.ulc = ULC.UltimateListCtrl(self.mainPanel, agwStyle=ULC.ULC_HAS_VARIABLE_ROW_HEIGHT | ULC.ULC_REPORT | ULC.ULC_HRULES)
         self.ulc.InsertColumn(0, "Файл", width=350)
-        self.ulc.InsertColumn(1, "Поставщик", width=215)
+        self.ulc.InsertColumn(1, "Поставщик", width=190)
         self.hbox3.Add(self.ulc, proportion=1, flag=wx.EXPAND)
 
 
@@ -150,6 +150,7 @@ class MainForm(wx.Frame):
             self.del_from_pathList(self.ulc.GetItemText(self.ulc.GetFocusedItem()))
             self.ulc.DeleteItem(self.ulc.GetFocusedItem())
 
+    # удаляет item из pathList (тот же, что и через deleteRowInUlc)
     def del_from_pathList(self, fileName):
         for item in self.pathList:
             if fileName in item:
