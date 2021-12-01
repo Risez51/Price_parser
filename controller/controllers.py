@@ -12,24 +12,35 @@ class Controllers:
         compFile = comparisionParser.ComparisionParser(view_Data.comparision_file)
         complist = compFile.getComparisionList()
 
-        for price_file in view_Data.supplierFiles:
 
-            #print(f'{list(items)[0]} - ЭТО ЛИСТ АЙТЕМС[0]')
-            if list(price_file.keys())[0] == "Дарси 1":
-                #print(f'{list(price_file.keys())[0]} - ЭТО ЛИСТ АЙТЕМС[0] ДАРСИ' )
-                #print(f'{str(price_file.get(list(price_file.keys())[0]))} - ЭТО ЛИСТ АЙТЕМС[1] ДАРСИ')
-                darsiFile = supplierParser.SupplierParser(
-                    str(price_file.get(list(price_file.keys())[0])), 2, 4, 0)
-                darsiProducts = darsiFile.getProductListFromXlsx()
-                supplierLists.append({"Дарси 1": darsiProducts})
-            elif list(price_file.keys())[0] == "Мир инструментов 1":
-                #print(f'{list(price_file.keys())[0]} - ЭТО ЛИСТ АЙТЕМС[0] МИР ИНСТРУЕНТОВ 1')
-                mirInstrumentov = supplierParser.SupplierParser(
-                    str(price_file.get(list(price_file.keys())[0])), 0, 8, 0)
-                mirInstrumentovProducts = mirInstrumentov.getProductListFromXlsx()
-                supplierLists.append({"Мир инструментов 1": mirInstrumentovProducts})
-            else:
-                pass
+        for item in view_Data.supplierFiles:
+            for supplierName, supplierFilePath in item.items():
+                if supplierName == "Дарси":
+                    #SupplierParser(путь к файлу, номер столбца артикул, номер столбца цена, номер столбца бренд | Отсчет с ноля)
+                    myFile = supplierParser.SupplierParser(supplierFilePath, 2, 4, 0)
+                    productList = myFile.getProductListFromXlsx()
+                    supplierLists.append({"Дарси 1": productList})
+                    supplierLists.append({"Дарси 2": productList})
+
+                elif supplierName == "Мир инструментов":
+                    myFile = supplierParser.SupplierParser(supplierFilePath, 0, 8, 0)
+                    productList = myFile.getProductListFromXlsx()
+                    supplierLists.append({"Мир инструментов 1": productList})
+                    supplierLists.append({"Мир инструментов 2": productList})
+                elif supplierName == "Белый медведь":
+                    myFile = supplierParser.SupplierParser(supplierFilePath, 1, 3, 0)
+                    productList = myFile.getProductListFromXlsx()
+                    supplierLists.append({"Белый медведь": productList})
+                elif supplierName == "Автоключ":
+                    myFile = supplierParser.SupplierParser(supplierFilePath, 0, 7, 0)
+                    productList = myFile.getProductListFromXlsx()
+                    supplierLists.append({"Автоключ": productList})
+                elif supplierName == "Ипц":
+                    myFile = supplierParser.SupplierParser(supplierFilePath, 0, 2, 0)
+                    productList = myFile.getProductListFromXlsx()
+                    supplierLists.append({"Ипц": productList})
+                else:
+                    pass
 
         rs = resultCreater.ResultCreater(supplierLists, uchList, complist)
         rList = rs.createResultList()

@@ -16,17 +16,14 @@ class MainForm(wx.Frame):
         bar.Append(menu, "Файл")
         self.SetMenuBar(bar)
 
-
         # бинды верхнего меню
         self.Bind(wx.EVT_MENU, self.onAbout, aboutItem)
         self.Bind(wx.EVT_MENU, self.onExit, exitItem)
-
 
         #Рабочая область
         self.mainPanel = wx.Panel(self)
         self.mainPanel.SetBackgroundColour(wx.WHITE)
         self.vbox = wx.BoxSizer(wx.VERTICAL)
-
 
         #Первая строка (добавление файла: отчет/выгрузка(china2) из CheesCake)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
@@ -44,7 +41,6 @@ class MainForm(wx.Frame):
         hbox15 = wx.BoxSizer(wx.HORIZONTAL)
         sep15 = wx.StaticLine(self.mainPanel)
         hbox15.Add(sep15, flag=wx.EXPAND, proportion=1)
-
 
         #Вторая строка (добавление файла соответствий)
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
@@ -65,18 +61,13 @@ class MainForm(wx.Frame):
         buttonOpenSupplierPrices.Bind(wx.EVT_BUTTON, self.openSupplierFiles)
         hbox25.Add(buttonOpenSupplierPrices, flag=wx.EXPAND, proportion=1)
 
-
         #Рабочая область - таблица добавленных файлов поставщика:
-        self.l = ["Дарси 1", "Мир инструментов 1"]
+        self.l = ["Дарси", "Мир инструментов", "Белый медведь", "Автоключ", "Ипц"]
         self.hbox3 = wx.BoxSizer(wx.HORIZONTAL)
         self.ulc = ULC.UltimateListCtrl(self.mainPanel, agwStyle=ULC.ULC_HAS_VARIABLE_ROW_HEIGHT | ULC.ULC_REPORT | ULC.ULC_HRULES)
         self.ulc.InsertColumn(0, "Файл", width=350)
         self.ulc.InsertColumn(1, "Поставщик", width=190)
-
         self.hbox3.Add(self.ulc, proportion=1, flag=wx.EXPAND)
-
-        print(f'{self.hbox3.GetSize()} - размер hbox3 при инициализации')
-        print(f'{self.ulc.GetSize()} - размер ulc при инициализации')
 
         #Кнопка управление приложением Спарсить/Очистить
         hbox4 = wx.BoxSizer(wx.HORIZONTAL)
@@ -95,13 +86,10 @@ class MainForm(wx.Frame):
         hbox4.Add(buttonClearAllUlc, flag=wx.LEFT | wx.RIGHT, border=10)
         hbox4.Add(buttonParse, flag=wx.LEFT | wx.RIGHT, border=10)
 
-
         #бинды кнопок управления
         self.Bind(wx.EVT_BUTTON, self.deleteRowInUlc, buttonDeleteRow)
         self.Bind(wx.EVT_BUTTON, self.getDataFromForm, buttonParse)
         self.Bind(wx.EVT_BUTTON, self.clearULC, buttonClearAllUlc)
-
-
 
         #добавление элементов в главный сайзер приложения VBOX
         self.vbox.Add(hbox1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
@@ -111,12 +99,13 @@ class MainForm(wx.Frame):
         self.vbox.Add(self.hbox3, proportion=1, flag=wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(hbox4, flag=wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
 
-
         #Добавление VBOX на главную панель рабочей области
         self.mainPanel.SetSizer(self.vbox)
 
+
     def doNothing(self, event):
         pass
+
 
     def getDataFromForm(self, event):
         self.vd.supplierFiles = []
@@ -132,8 +121,6 @@ class MainForm(wx.Frame):
             print(a, b.GetString(ind))
         cnt = controllers.Controllers()
         cnt.parse(self.vd)
-        print(self.vd.supplierFiles)
-
 
 
     def test(self, event):
@@ -153,17 +140,20 @@ class MainForm(wx.Frame):
         self.ulc.DeleteAllItems()
         self.pathList = []
 
+
     # удаляет 1 выбранный item в UltimateListCtr
     def deleteRowInUlc(self, event):
        if self.ulc.GetFocusedItem() > -1:
             self.del_from_pathList(self.ulc.GetItemText(self.ulc.GetFocusedItem()))
             self.ulc.DeleteItem(self.ulc.GetFocusedItem())
 
+
     # удаляет item из pathList (тот же, что и через deleteRowInUlc)
     def del_from_pathList(self, fileName):
         for item in self.pathList:
             if fileName in item:
                 self.pathList.remove(item)
+
 
     #Добавление файлов в UltimateListCtrl из file_dialog
     def openSupplierFiles(self, event):
@@ -174,7 +164,6 @@ class MainForm(wx.Frame):
         if dlg.ShowModal() == wx.ID_OK:
             for item in dlg.GetPaths():
                 self.pathList.append(item)
-            #self.pathList = dlg.GetPaths()
             fileNames = dlg.GetFilenames()
             for i in range(0, len(dlg.GetPaths())):
                 cm = wx.Choice(self.ulc, id=i)
@@ -206,6 +195,7 @@ class MainForm(wx.Frame):
             self.vd.comparision_file = dlg.GetPath()
         dlg.Destroy()
 
+
     #Если choice пустой(не выбран поставщик) - выдает message dialog
     def validatingUltimateList(self, index):
         dlg = wx.MessageDialog(self, "Не выбран поставщик у одного из файлов", "Ошибка", wx.OK)
@@ -216,11 +206,13 @@ class MainForm(wx.Frame):
         dlg = wx.MessageDialog(self, "Message in MessageDialog", "Title", wx.OK)
         dlg.ShowModal()
 
+
     # Выход из программы
     def errorMessage(self):
         dlg = wx.MessageDialog(self, "Что-то пошло не так, как задумывалось.\nПопробуйте снова или обратитесь к разработчику", "Ошибка",  wx.OK)
         dlg.ShowModal()
         wx.Exit()
+
 
     def onExit(self, event):
         wx.Exit()
