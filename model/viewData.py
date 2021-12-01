@@ -4,5 +4,3 @@ class ViewData():
         self.comparision_file = ""
         self.supplierFiles = []
 
-    def get_supplierFile(self, supplierFile):
-        pass

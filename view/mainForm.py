@@ -1,10 +1,11 @@
 import wx
 from wx.lib.agw import ultimatelistctrl as ULC
 from model import viewData
+from controller import  controllers
+
 class MainForm(wx.Frame):
     def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=(600, 400))
-
+        wx.Frame.__init__(self, parent, title=title, size=(600, 500))
         self.vd = viewData.ViewData()
         self.pathList = []
         #Верхнее меню
@@ -35,7 +36,7 @@ class MainForm(wx.Frame):
         hbox1.Add(label_CheesCake, flag=wx.RIGHT, border=8)
         hbox1.Add(self.input_CheesCake, proportion=1)
         hbox1.Add(buttonOpenCheesCakeFile, flag=wx.RIGHT | wx.LEFT, border=8)
-
+        #controller.controllers.add_Cheescake_Report_controller()
         #бинды первой строки Cheescake:
         self.Bind(wx.EVT_BUTTON, self.add_Cheescake_Report, buttonOpenCheesCakeFile)
 
@@ -66,15 +67,16 @@ class MainForm(wx.Frame):
 
 
         #Рабочая область - таблица добавленных файлов поставщика:
-        self.l = ["Дарси", "Мир инструмента"]
+        self.l = ["Дарси 1", "Мир инструментов 1"]
         self.hbox3 = wx.BoxSizer(wx.HORIZONTAL)
         self.ulc = ULC.UltimateListCtrl(self.mainPanel, agwStyle=ULC.ULC_HAS_VARIABLE_ROW_HEIGHT | ULC.ULC_REPORT | ULC.ULC_HRULES)
         self.ulc.InsertColumn(0, "Файл", width=350)
         self.ulc.InsertColumn(1, "Поставщик", width=190)
+
         self.hbox3.Add(self.ulc, proportion=1, flag=wx.EXPAND)
 
-
-        self.l = ["Дарси", "Мир инструмента"]
+        print(f'{self.hbox3.GetSize()} - размер hbox3 при инициализации')
+        print(f'{self.ulc.GetSize()} - размер ulc при инициализации')
 
         #Кнопка управление приложением Спарсить/Очистить
         hbox4 = wx.BoxSizer(wx.HORIZONTAL)
@@ -85,7 +87,7 @@ class MainForm(wx.Frame):
         buttonDeleteRow = wx.Button(self.mainPanel, wx.ID_ANY, label="Удалить файл", size=(90, 30))
 
         #TEST BUTTON
-        self.btnTest = wx.Button(self.mainPanel, wx.ID_ANY, label="test", size=(90,30))
+        self.btnTest = wx.Button(self.mainPanel, wx.ID_ANY, label="test", size=(90, 30))
         self.Bind(wx.EVT_BUTTON, self.test, self.btnTest)
         hbox4.Add(self.btnTest)
 
@@ -100,6 +102,7 @@ class MainForm(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.clearULC, buttonClearAllUlc)
 
 
+
         #добавление элементов в главный сайзер приложения VBOX
         self.vbox.Add(hbox1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(hbox2, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
@@ -112,6 +115,8 @@ class MainForm(wx.Frame):
         #Добавление VBOX на главную панель рабочей области
         self.mainPanel.SetSizer(self.vbox)
 
+    def doNothing(self, event):
+        pass
 
     def getDataFromForm(self, event):
         self.vd.supplierFiles = []
@@ -125,7 +130,10 @@ class MainForm(wx.Frame):
                 break
             self.vd.supplierFiles.append({f'{b.GetString(ind)}': self.get_path_by_name(a)})
             print(a, b.GetString(ind))
+        cnt = controllers.Controllers()
+        cnt.parse(self.vd)
         print(self.vd.supplierFiles)
+
 
 
     def test(self, event):
@@ -136,6 +144,7 @@ class MainForm(wx.Frame):
         for item in self.pathList:
             if fileName in item:
                 return item
+        self.errorMessage()
         return "не нашел такого файла в списке self.pathList"
 
 
@@ -163,15 +172,17 @@ class MainForm(wx.Frame):
             defaultDir=".",
             defaultFile="", wildcard="*.*", style=wx.FD_MULTIPLE)
         if dlg.ShowModal() == wx.ID_OK:
-            self.pathList = dlg.GetPaths()
+            for item in dlg.GetPaths():
+                self.pathList.append(item)
+            #self.pathList = dlg.GetPaths()
             fileNames = dlg.GetFilenames()
-            for i in range(0,len(self.pathList)):
+            for i in range(0, len(dlg.GetPaths())):
                 cm = wx.Choice(self.ulc, id=i)
                 cm.AppendItems(self.l)
-                self.ulc.InsertStringItem(i,fileNames[i])
+                cm.Bind(wx.EVT_MOUSEWHEEL, self.doNothing)
+                self.ulc.InsertStringItem(i, fileNames[i])
                 self.ulc.SetItemWindow(i, 1, cm, ULC.ULC_ALIGN_LEFT)
         dlg.Destroy()
-
 
 
     def add_Cheescake_Report(self, event):
@@ -206,6 +217,11 @@ class MainForm(wx.Frame):
         dlg.ShowModal()
 
     # Выход из программы
+    def errorMessage(self):
+        dlg = wx.MessageDialog(self, "Что-то пошло не так, как задумывалось.\nПопробуйте снова или обратитесь к разработчику", "Ошибка",  wx.OK)
+        dlg.ShowModal()
+        wx.Exit()
+
     def onExit(self, event):
         wx.Exit()
         pass
