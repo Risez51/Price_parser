@@ -34,6 +34,9 @@ class ResultCreater:
                                "Дарси 1, цена": self.getSupplierParam(self.listWithsupplierLists,
                                                                       "Дарси 1",
                                                                       comparisionItem.darsi1_article),
+                               "Дарси 1, разница в цене": self.get_procent_difference(uchItem.selling_price,self.getSupplierParam(self.listWithsupplierLists,
+                                                                      "Дарси 1",
+                                                                      comparisionItem.darsi1_article)),
                                "Дарси 1, бренд": comparisionItem.darsi1_brand,
 
                                "Дарси 2, артикул": comparisionItem.darsi2_article,
@@ -81,9 +84,26 @@ class ResultCreater:
 
     def getResultExcelFile(self, resultList):
         df = pd.DataFrame(data=resultList)
-        df.to_excel('C:\\Users\\OperTech\\pythonProject\\pythonProject\\Price_parser\\resultFile.xlsx', index=False)
+        df.to_excel('resultFile.xlsx', index=False)
         print("result file complited")
 
+    def get_procent_difference(self, price_holding, price_supplier):
+        p_hold = self.get_float_from_price(price_holding)
+        p_sup = self.get_float_from_price(price_supplier)
+        one_procent = p_hold / 100
+        procent = (p_sup / one_procent) - 100
+        return f'{procent:.2f}%'
+
+
+    def get_float_from_price(self, price):
+        if type(price) == int or type(price) == float:
+            return price
+        else:
+            try:
+                return float(price)
+            except:
+                print(price)
+                return 0
 
     def get_uchItem(self, article, uchList: list):
         for item in uchList:

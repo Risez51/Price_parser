@@ -69,22 +69,20 @@ class MainForm(wx.Frame):
         self.ulc.InsertColumn(1, "Поставщик", width=190)
         self.hbox3.Add(self.ulc, proportion=1, flag=wx.EXPAND)
 
+        #progress bar
+        hbox35 = wx.BoxSizer(wx.HORIZONTAL)
+        self.progress_bar = wx.Gauge(self.mainPanel, wx.ID_ANY, range=100, size=(580,20))
+        hbox35.Add(self.progress_bar, proportion=1, flag=wx.EXPAND | wx.RIGHT | wx.LEFT, border=3)
         #Кнопка управление приложением Спарсить/Очистить
         hbox4 = wx.BoxSizer(wx.HORIZONTAL)
 
         buttonParse = wx.Button(self.mainPanel, wx.ID_ANY, label="Спарсить", size=(90, 30))
-        buttonParse.SetBackgroundColour(wx.GREEN)
         buttonClearAllUlc = wx.Button(self.mainPanel, wx.ID_ANY, label="Очистить все", size=(90, 30))
         buttonDeleteRow = wx.Button(self.mainPanel, wx.ID_ANY, label="Удалить файл", size=(90, 30))
 
-        #TEST BUTTON
-        self.btnTest = wx.Button(self.mainPanel, wx.ID_ANY, label="test", size=(90, 30))
-        self.Bind(wx.EVT_BUTTON, self.test, self.btnTest)
-        hbox4.Add(self.btnTest)
-
-        hbox4.Add(buttonDeleteRow, flag=wx.ALIGN_LEFT)
-        hbox4.Add(buttonClearAllUlc, flag=wx.LEFT | wx.RIGHT, border=10)
-        hbox4.Add(buttonParse, flag=wx.LEFT | wx.RIGHT, border=10)
+        hbox4.Add(buttonDeleteRow, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10)
+        hbox4.Add(buttonClearAllUlc, flag=wx.EXPAND | wx.RIGHT, border=250)
+        hbox4.Add(buttonParse, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10)
 
         #бинды кнопок управления
         self.Bind(wx.EVT_BUTTON, self.deleteRowInUlc, buttonDeleteRow)
@@ -96,8 +94,9 @@ class MainForm(wx.Frame):
         self.vbox.Add(hbox2, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(hbox15, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(hbox25, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
-        self.vbox.Add(self.hbox3, proportion=1, flag=wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
-        self.vbox.Add(hbox4, flag=wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
+        self.vbox.Add(self.hbox3, proportion=1, flag=wx.EXPAND | wx.BOTTOM | wx.TOP, border=10)
+        self.vbox.Add(hbox35, flag= wx.EXPAND)
+        self.vbox.Add(hbox4, flag= wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
 
         #Добавление VBOX на главную панель рабочей области
         self.mainPanel.SetSizer(self.vbox)
@@ -108,6 +107,8 @@ class MainForm(wx.Frame):
 
 
     def getDataFromForm(self, event):
+        n = 10
+        self.progress_bar.SetValue(n)
         self.vd.supplierFiles = []
         rowsCount = self.ulc.GetItemCount()
         for i in range(0, rowsCount):
@@ -117,15 +118,14 @@ class MainForm(wx.Frame):
             if b.GetString(ind) == "":
                 self.validatingUltimateList(ind)
                 break
+            n=n+10
+            self.progress_bar.SetValue(n)
             self.vd.supplierFiles.append({f'{b.GetString(ind)}': self.get_path_by_name(a)})
             print(a, b.GetString(ind))
         cnt = controllers.Controllers()
+        self.progress_bar.Pulse()
         cnt.parse(self.vd)
-
-
-    def test(self, event):
-        for item in self.pathList:
-            print(item)
+        self.progress_bar.SetValue(100)
 
     def get_path_by_name(self, fileName):
         for item in self.pathList:
