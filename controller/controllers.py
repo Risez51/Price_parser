@@ -21,7 +21,6 @@ class Controllers:
                     productList = myFile.getProductListFromXlsx()
                     supplierLists.append({"Дарси 1": productList})
                     supplierLists.append({"Дарси 2": productList})
-
                 elif supplierName == "Мир инструментов":
                     myFile = supplierParser.SupplierParser(supplierFilePath, 0, 8, 0)
                     productList = myFile.getProductListFromXlsx()
@@ -41,6 +40,8 @@ class Controllers:
                     supplierLists.append({"Ипц": productList})
                 else:
                     pass
+
+
 
         rs = resultCreater.ResultCreater(supplierLists, uchList, complist)
         rList = rs.createResultList()

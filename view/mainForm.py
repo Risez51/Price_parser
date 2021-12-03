@@ -121,7 +121,7 @@ class MainForm(wx.Frame):
             n=n+10
             self.progress_bar.SetValue(n)
             self.vd.supplierFiles.append({f'{b.GetString(ind)}': self.get_path_by_name(a)})
-            print(a, b.GetString(ind))
+            #print(a, b.GetString(ind))
         cnt = controllers.Controllers()
         self.progress_bar.Pulse()
         cnt.parse(self.vd)
