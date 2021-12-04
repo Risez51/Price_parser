@@ -95,8 +95,8 @@ class MainForm(wx.Frame):
         self.vbox.Add(hbox15, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(hbox25, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(self.hbox3, proportion=1, flag=wx.EXPAND | wx.BOTTOM | wx.TOP, border=10)
-        self.vbox.Add(hbox35, flag= wx.EXPAND)
-        self.vbox.Add(hbox4, flag= wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
+        self.vbox.Add(hbox35, flag=wx.EXPAND)
+        self.vbox.Add(hbox4, flag=wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
 
         #Добавление VBOX на главную панель рабочей области
         self.mainPanel.SetSizer(self.vbox)
@@ -181,7 +181,7 @@ class MainForm(wx.Frame):
             defaultFile="", wildcard="*.*", style=wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             self.input_CheesCake.LabelText = dlg.GetFilename()
-            self.vd.cheescake_report = dlg.GetPath()
+            self.vd.cheescake_report = {"Отчет чизкейк": dlg.GetPath()}
         dlg.Destroy()
 
 
@@ -192,7 +192,7 @@ class MainForm(wx.Frame):
             defaultFile="", wildcard="*.*", style=wx.FD_OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             self.input_comparision.LabelText = dlg.GetFilename()
-            self.vd.comparision_file = dlg.GetPath()
+            self.vd.comparision_file = {"Таблица соответствий": dlg.GetPath()}
         dlg.Destroy()
 
 

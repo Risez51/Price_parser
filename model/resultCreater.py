@@ -1,23 +1,20 @@
-import pandas as pd
-from model import unloadedCheescakeItem
+from model import unloadedCheescakeItem, fileReader
 
 
 class ResultCreater:
     def __init__(self, listWithsupplierLists, uchList, comparisionList ):
         self.listWithsupplierLists = listWithsupplierLists
-        self.uchList = uchList
-        self.comparisionList = comparisionList
-        pass
-
+        self.uchList = uchList.get("Отчет чизкейк")
+        self.comparisionList = comparisionList.get("Таблица соответствий")
 
 
     def createResultList(self):
         resultList = []
         for comparisionItem in self.comparisionList:
             uchItem = self.get_uchItem(comparisionItem.holding_article, self.uchList)
-            price_darsi_1 = self.getSupplierParam(self.listWithsupplierLists, "Дарси 1",
+            price_darsi_1 = self.getSupplierParam(self.listWithsupplierLists, "Дарси",
                                                   comparisionItem.darsi1_article)
-            price_darsi_2 = self.getSupplierParam(self.listWithsupplierLists, "Дарси 2",
+            price_darsi_2 = self.getSupplierParam(self.listWithsupplierLists, "Дарси",
                                                   comparisionItem.darsi2_article)
             price_avtokluch = self.getSupplierParam(self.listWithsupplierLists, "Автоключ",
                                                     comparisionItem.avtokluch_article)
@@ -25,9 +22,9 @@ class ResultCreater:
                                                comparisionItem.inpo_article)
             price_white_bear = self.getSupplierParam(self.listWithsupplierLists, "Белый медведь",
                                                      comparisionItem.whiteBear_article)
-            price_mir_instrumetnov_1 = self.getSupplierParam(self.listWithsupplierLists, "Мир инструментов 1",
+            price_mir_instrumetnov_1 = self.getSupplierParam(self.listWithsupplierLists, "Мир инструментов",
                                                              comparisionItem.mirInstrumentov1_article)
-            price_mir_instrumetnov_2 = self.getSupplierParam(self.listWithsupplierLists, "Мир инструментов 2",
+            price_mir_instrumetnov_2 = self.getSupplierParam(self.listWithsupplierLists, "Мир инструментов",
                                                              comparisionItem.mirInstrumentov2_article)
             purchase_price = self.get_float_from_price(uchItem.purchase_price)
             purchase_price_with_other_expenses = self.get_price_with_other_expenses(purchase_price, uchItem.supplier)
@@ -95,12 +92,6 @@ class ResultCreater:
             return price * 1.1
         else:
             return price
-
-
-    def getResultExcelFile(self, resultList):
-        df = pd.DataFrame(data=resultList)
-        df.to_excel('resultFile.xlsx', index=False)
-        print("result file complited")
 
     def get_procent_difference(self,  price_supplier, price_holding):
         if price_holding == 0 or price_holding == "0" or price_supplier == 0.00 or price_supplier == "0.00" or price_supplier == "":

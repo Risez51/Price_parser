@@ -1,6 +1,7 @@
 from view import mainForm
 import wx
 
+
 def main():
     # Здесь происходит создание экземпляра нашей программы, которая впоследствии и будет запущена.
     app = wx.App()
@@ -11,4 +12,4 @@ def main():
 
 
 if __name__ == "__main__":
-        main()
+    main()

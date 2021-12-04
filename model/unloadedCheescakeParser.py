@@ -1,18 +1,16 @@
 import pandas as pd
-from model import unloadedCheescakeItem
+from model import unloadedCheescakeItem, fileReader
 
 
-class UnloadedCheescakeParser():
+class UnloadedCheescakeParser:
 
-    def __init__(self, path_to_file):
-        self.path_to_file = path_to_file
+    def __init__(self):
+        self.fr = fileReader.FileReader()
+        pass
 
-    def getUnloadedCheescakeList(self):
-        excelFile = pd.ExcelFile(self.path_to_file)
-        df = excelFile.parse()
-        arr_with_stock_Excel_data = df.to_numpy()
-        resList = []
-        for item in arr_with_stock_Excel_data:
+    def get_products_list(self, path_to_file):
+        result_list = []
+        for item in self.fr.get_data_list(path_to_file):
             ichItem = unloadedCheescakeItem.UnloadedCheescakeItem()
             ichItem.article = str(item[0]).strip()
             ichItem.name = item[1]
@@ -22,5 +20,5 @@ class UnloadedCheescakeParser():
             ichItem.stock = item[6]
             ichItem.selling_price = item[7]
             ichItem.group = item[8]
-            resList.append(ichItem)
-        return resList
+            result_list.append(ichItem)
+        return result_list
