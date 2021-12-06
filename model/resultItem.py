@@ -1,0 +1,21 @@
+class ResultItem:
+    def __init__(self):
+        self.holding_article = ""
+        self.holding_name = ""
+        self.holding_group = ""
+        self.avtokluch_article = ""
+
+        self.avtokluch_price_difference = ""
+        self.avtokluch_brand = ""
+        self.darsi1_article = ""
+        self.darsi1_brand = ""
+        self.darsi2_article = ""
+        self.darsi2_brand = ""
+        self.inpo_article = ""
+        self.inpo_brand = ""
+        self.whiteBear_article = ""
+        self.whiteBear_brand = ""
+        self.mirInstrumentov1_article = ""
+        self.mirInstrumentov1_brand = ""
+        self.mirInstrumentov2_article = ""
+        self.mirInstrumentov2_brand = ""

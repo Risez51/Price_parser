@@ -1,4 +1,4 @@
-from model import unloadedCheescakeItem, fileReader
+from model import unloadedCheescakeItem
 
 
 class ResultCreater:
@@ -29,7 +29,7 @@ class ResultCreater:
             purchase_price = self.get_float_from_price(uchItem.purchase_price)
             purchase_price_with_other_expenses = self.get_price_with_other_expenses(purchase_price, uchItem.supplier)
             resultList.append({"Холдинг, артикул": comparisionItem.holding_article,
-                               "Холдинг, наименование": comparisionItem.name,
+                               "Холдинг, наименование": comparisionItem.holding_name,
                                "Холдинг, группа": comparisionItem.holding_group,
                                "Холдинг, цена закупки с учетом прочих расходов": purchase_price_with_other_expenses,
                                "Холдинг, цена продажи": uchItem.selling_price,
@@ -77,12 +77,34 @@ class ResultCreater:
 
     def getSupplierParam(self, listWithsupplierLists, supplier, article):
         for supplierList in listWithsupplierLists:
-            supKeys = list(supplierList.keys())
-            if supKeys[0] == supplier:
+            if list(supplierList.keys())[0] == supplier:
                 for supplierProduct in supplierList.get(supplier):
                     if str(supplierProduct.article) == article:
                         return f'{self.get_float_from_price(supplierProduct.price) / 1.2:.2f}'
         return ""
+
+
+
+
+    def get_dict_from_data(self, comparition_list, supplier_products_list):
+        sup_name = list(supplier_products_list.keys())[0]
+        if sup_name == "Дарси":
+            self.get_result_darsi(comparition_list.get(sup_name), comparition_list)
+        pass
+
+    def get_result_darsi(self, products_list, comparition_list):
+        result_list = []
+        for comp_product in comparition_list:
+            for sup_product in products_list:
+                if comp_product.darsi1_article == sup_product.article:
+                    result_list.append([{"Дарси 1, артикул": sup_product.article,
+                               "Дарси 1, цена":sup_product.price,
+                               "Дарси 1, разница в цене":1,
+                               "Дарси 1, бренд": 1}])
+
+
+
+
 
     def get_price_with_other_expenses(self, price, brand):
         if brand=="SHAN DONG DONGPING JIUXIN HARDWARE TOOLS CO.,LTD" or\

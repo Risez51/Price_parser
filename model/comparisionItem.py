@@ -2,7 +2,7 @@ class ComparisionItem:
 
     def __init__(self):
       self.holding_article = ""
-      self.name = ""
+      self.holding_name = ""
       self.holding_group =""
       self.avtokluch_article = ""
       self.avtokluch_brand = ""
