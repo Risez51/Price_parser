@@ -10,7 +10,7 @@ class Controllers(object):
         self.frame.Center()
         self.frame.Show()
         self.view_data = viewData.ViewData()
-        self.path_list = ""
+        self.path_list = []
 
         # Binds
         self.frame.Bind(wx.EVT_BUTTON, self.add_cheescake_preport, self.frame.buttonOpenCheesCakeFile)
@@ -36,13 +36,14 @@ class Controllers(object):
     def add_supplier_files(self, event):
         dlg = self.open_files_dialog()
         self.add_ulc_items(dlg)
-        self.path_list = list(dlg.GetPaths())
+        self.path_list += list(dlg.GetPaths())
 
 
 
     def add_ulc_items(self, dlg):
         file_names = dlg.GetFilenames()
         for i in range(0, len(file_names)):
+
             self.frame.ulc.InsertStringItem(i, file_names[i])
             self.frame.ulc.SetItemWindow(i, 1, self.create_combobox_ulc())
 
@@ -66,7 +67,10 @@ class Controllers(object):
 
     def del_ulc_row(self, event):
         if self.frame.ulc.GetFocusedItem() > -1:
+            #self.frame.ulc.GetItemWindow()
+            #self.frame.ulc.DeleteItemWindow()
             self.frame.ulc.DeleteItem(self.frame.ulc.GetFocusedItem())
+
 
 
     def clearULC(self, event):
@@ -86,18 +90,23 @@ class Controllers(object):
 
     def start_parse(self, event):
         print(self.path_list)
+        self.frame.progress_bar.SetValue(10)
         my_parser = parser.Parser()
         uchList = my_parser.get_products_list(self.view_data.cheescake_report)
+        self.frame.progress_bar.SetValue(20)
         complist = my_parser.get_products_list(self.view_data.comparision_file)
+        self.frame.progress_bar.SetValue(30)
         supplierLists = self.get_suppliers_list()
         rs = resultCreater.ResultCreater(supplierLists, uchList, complist).createResultList()
         self.export_to_excel(rs)
+        self.frame.progress_bar.SetValue(100)
 
 
     def get_suppliers_list(self):
         supplierLists = []
         my_parser = parser.Parser()
         for i in range(0, self.frame.ulc.GetItemCount()):
+            self.frame.progress_bar.SetValue(self.frame.progress_bar.GetValue()+10)
             file_name = self.frame.ulc.GetItemText(i)
             combobox = self.frame.ulc.GetItemWindow(i, 1)
             sup_name = combobox.GetString(combobox.GetSelection())
