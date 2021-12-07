@@ -84,8 +84,6 @@ class ResultCreater:
         return ""
 
 
-
-
     def get_dict_from_data(self, comparition_list, supplier_products_list):
         sup_name = list(supplier_products_list.keys())[0]
         if sup_name == "Дарси":
@@ -101,10 +99,6 @@ class ResultCreater:
                                "Дарси 1, цена":sup_product.price,
                                "Дарси 1, разница в цене":1,
                                "Дарси 1, бренд": 1}])
-
-
-
-
 
     def get_price_with_other_expenses(self, price, brand):
         if brand=="SHAN DONG DONGPING JIUXIN HARDWARE TOOLS CO.,LTD" or\

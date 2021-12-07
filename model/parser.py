@@ -6,7 +6,7 @@ class Parser:
     def __init__(self):
         self.fr = fileReader.FileReader()
 
-    def check_file(self,  file_tag, file_path):
+    def choose_file_parser(self,  file_tag, file_path):
         if file_tag == "Отчет чизкейк":
             return {file_tag: unloadedCheescakeParser.UnloadedCheescakeParser().get_products_list(file_path)}
         elif file_tag == "Таблица соответствий":
@@ -27,7 +27,7 @@ class Parser:
     def get_products_list(self, dic):
         keys = list(dic.keys())[0]
         values = list(dic.values())[0]
-        return self.check_file(str(keys), str(values))
+        return self.choose_file_parser(str(keys), str(values))
 
 
 
