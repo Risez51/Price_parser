@@ -12,7 +12,7 @@ class MyWindow(wx.Frame):
         bar.Append(menu, "Файл")
         self.SetMenuBar(bar)
 
-        # Рабочая область
+        # Главная панель
         self.mainPanel = wx.Panel(self)
         self.mainPanel.SetBackgroundColour(wx.WHITE)
         self.vbox = wx.BoxSizer(wx.VERTICAL)
@@ -42,12 +42,13 @@ class MyWindow(wx.Frame):
 
         # Добавление прайсов на лист
         h_box4 = wx.BoxSizer(wx.HORIZONTAL)
-        self.buttonOpenSupplierPrices = wx.Button(self.mainPanel, wx.ID_ANY, label="Добавить прайсы поставщиков", size=(0,
-                                                                                                                   40))
+        self.buttonOpenSupplierPrices = wx.Button(self.mainPanel, wx.ID_ANY,
+                                                  label="Добавить прайсы поставщиков",
+                                                  size=(0, 40))
+
         h_box4.Add(self.buttonOpenSupplierPrices, flag=wx.EXPAND, proportion=1)
 
         # Рабочая область - таблица добавленных файлов поставщика:
-        self.l = ["Дарси", "Мир инструментов", "Белый медведь", "Автоключ", "Ипц"]
         h_box5 = wx.BoxSizer(wx.HORIZONTAL)
         self.ulc = ULC.UltimateListCtrl(self.mainPanel,
                                         agwStyle=ULC.ULC_HAS_VARIABLE_ROW_HEIGHT | ULC.ULC_REPORT | ULC.ULC_HRULES)

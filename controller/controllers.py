@@ -10,7 +10,7 @@ class Controllers(object):
         self.frame.Center()
         self.frame.Show()
         self.view_data = viewData.ViewData()
-        self.all_files_list = []
+        self.path_list = ""
 
         # Binds
         self.frame.Bind(wx.EVT_BUTTON, self.add_cheescake_preport, self.frame.buttonOpenCheesCakeFile)
@@ -19,35 +19,38 @@ class Controllers(object):
 
         self.frame.Bind(wx.EVT_BUTTON, self.del_ulc_row, self.frame.buttonDeleteRow)
         self.frame.Bind(wx.EVT_BUTTON, self.clearULC, self.frame.buttonClearAllUlc)
+        self.frame.Bind(wx.EVT_BUTTON, self.start_parse, self.frame.buttonParse)
 
 
     def add_cheescake_preport(self, event):
-        self.view_data.cheescake_report = self.open_file_dialog()
-        self.frame.input_CheesCake.LabelText = self.view_data.cheescake_report.GetFilename()
+        with self.open_file_dialog() as ofd:
+            self.view_data.cheescake_report = {"Отчет чизкейк": ofd.GetPath()}
+            self.frame.input_CheesCake.LabelText = ofd.GetFilename()
 
 
     def add_comparision_report(self, event):
-        self.view_data.comparision_file = self.open_file_dialog()
-        self.frame.input_comparision.LabelText = self.view_data.comparision_file.GetFilename()
+        with self.open_file_dialog() as ofd:
+            self.view_data.comparision_file = {"Таблица соответствий": ofd.GetPath()}
+            self.frame.input_comparision.LabelText = ofd.GetFilename()
 
     def add_supplier_files(self, event):
-        self.view_data.supplierFiles = self.open_files_dialog()
-        self.add_ulc_items()
+        dlg = self.open_files_dialog()
+        self.add_ulc_items(dlg)
+        self.path_list = list(dlg.GetPaths())
 
-    def add_ulc_items(self):
-        file_names = self.view_data.supplierFiles.GetFilenames()
+
+
+    def add_ulc_items(self, dlg):
+        file_names = dlg.GetFilenames()
         for i in range(0, len(file_names)):
             self.frame.ulc.InsertStringItem(i, file_names[i])
             self.frame.ulc.SetItemWindow(i, 1, self.create_combobox_ulc())
-        self.frame.ulc.Refresh()
 
     def create_combobox_ulc(self):
         combobox = wx.Choice(self.frame.ulc)
         combobox.AppendItems(self.view_data.all_supplier_list)
         combobox.Bind(wx.EVT_MOUSEWHEEL, self.doNothing)
         return combobox
-
-
 
     def doNothing(self, event):
         pass
@@ -65,6 +68,7 @@ class Controllers(object):
         if self.frame.ulc.GetFocusedItem() > -1:
             self.frame.ulc.DeleteItem(self.frame.ulc.GetFocusedItem())
 
+
     def clearULC(self, event):
         self.frame.ulc.DeleteAllItems()
         self.view_data.supplierFiles = ""
@@ -79,26 +83,40 @@ class Controllers(object):
             return dlg
         dlg.Destroy()
 
-    def start_parse_1(self):
+
+    def start_parse(self, event):
+        print(self.path_list)
         my_parser = parser.Parser()
-        uchList = my_parser.get_products_list(self.view_data.cheescake_report.GetPath())
-        complist = my_parser.get_products_list(self.view_data.comparision_file.GetPath())
-        for file_path in self.view_data.supplierFiles.GetPaths():
-            pass
-
-
-
-
-    def start_parse(self, view_Data: viewData):
-        supplierLists = []
-        my_parser = parser.Parser()
-        uchList = my_parser.get_products_list(view_Data.cheescake_report)
-        complist = my_parser.get_products_list(view_Data.comparision_file)
-        for item in view_Data.supplierFiles:
-            supplierLists.append(my_parser.get_products_list(item))
+        uchList = my_parser.get_products_list(self.view_data.cheescake_report)
+        complist = my_parser.get_products_list(self.view_data.comparision_file)
+        supplierLists = self.get_suppliers_list()
         rs = resultCreater.ResultCreater(supplierLists, uchList, complist).createResultList()
         self.export_to_excel(rs)
 
+
+    def get_suppliers_list(self):
+        supplierLists = []
+        my_parser = parser.Parser()
+        for i in range(0, self.frame.ulc.GetItemCount()):
+            file_name = self.frame.ulc.GetItemText(i)
+            combobox = self.frame.ulc.GetItemWindow(i, 1)
+            sup_name = combobox.GetString(combobox.GetSelection())
+            if sup_name == "":
+                self.validatingUltimateList()
+                break
+            supplierLists.append(my_parser.get_products_list({sup_name: self.get_path_by_file_name(file_name)}))
+        return supplierLists
+
+
+    def get_path_by_file_name(self, file_name):
+        for i in range(len(self.path_list)):
+            if file_name in self.path_list[i]:
+                return self.path_list[i]
+        return ""
+
+    def validatingUltimateList(self):
+        dlg = wx.MessageDialog(self, "Не выбран поставщик у одного из файлов", "Ошибка", wx.OK)
+        dlg.ShowModal()
 
     def export_to_excel(self, my_data):
         fileReader.FileReader().to_excel(my_data)

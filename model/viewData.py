@@ -3,5 +3,10 @@ class ViewData:
         self.cheescake_report = ""
         self.comparision_file = ""
         self.supplierFiles = []
-        self.all_supplier_list = ["Дарси", "Мир инструментов", "Белый медведь", "Автоключ", "Ипц"]
+        self.all_supplier_list = ["Дарси",
+                                  "Мир инструментов",
+                                  "Белый медведь",
+                                  "Автоключ",
+                                  "Ипц"]
+
 

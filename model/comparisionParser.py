@@ -11,7 +11,7 @@ class ComparisionParser:
         comparisionList = []
         for item in self.fr.get_data_list(path_to_file):
             compItem = comparisionItem.ComparisionItem()
-            compItem.name = item[0]
+            compItem.holding_name = item[0]
             compItem.holding_article = self.fix_str(item[1])
             compItem.holding_group = item[2]
             compItem.avtokluch_brand = item[4]

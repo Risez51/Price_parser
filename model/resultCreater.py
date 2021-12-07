@@ -83,6 +83,13 @@ class ResultCreater:
                         return f'{self.get_float_from_price(supplierProduct.price) / 1.2:.2f}'
         return ""
 
+    #getSupplierParam
+    def get_supplier_param(self, listWithsupliplierDict, supplier, article):
+        for supplierDic in listWithsupliplierDict:
+            if list(supplierDic.keys())[0] == supplier:
+                for product in supplierDic.get(supplier):
+                    if product.article == article:
+                        return f'{self.get_float_from_price(product.price) / 1.2:.2f}'
 
     def get_dict_from_data(self, comparition_list, supplier_products_list):
         sup_name = list(supplier_products_list.keys())[0]
