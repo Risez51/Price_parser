@@ -104,6 +104,7 @@ class ResultCreater:
         procent = (p_sup / one_procent) - 100
         return f'{procent:.2f}%'
 
+
     def get_float_from_price(self, price):
         if type(price) == int or type(price) == float:
             return price

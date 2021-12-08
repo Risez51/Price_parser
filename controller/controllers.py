@@ -101,7 +101,6 @@ class Controllers(object):
         except:
             self.error_massage("Отчет чизкейк: некорректный формат")
             sys.exit()
-
         try:
             self.all_files_dict.update(
             my_parser.get_products_list({"Таблица соответствий": self.all_files_dict.get("Таблица соответствий")}))

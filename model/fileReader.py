@@ -25,7 +25,3 @@ class FileReader:
             return self.get_list_from_csv(file_path)
         else:
             return []
-
-
-
-
