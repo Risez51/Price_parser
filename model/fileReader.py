@@ -1,4 +1,5 @@
 import pandas as pd
+import datetime
 
 
 class FileReader:
@@ -12,7 +13,10 @@ class FileReader:
         return pd.read_csv(file_path, sep=";", engine='python', encoding='latin-1').to_numpy()
 
     def to_excel(self, my_data):
-        pd.DataFrame(data=my_data).to_excel('./resultFile.xlsx', index=False)
+        myDate = datetime.datetime.now()
+
+        pd.DataFrame(data=my_data).to_excel(f'./Отчет (от {myDate.day}-{myDate.month}-{myDate.year}) (в {myDate.hour}-{myDate.minute}-{myDate.second}).xlsx',
+                                            index=False)
 
     def get_data_list(self,  file_path: str):
         if ".xl" in file_path:
