@@ -5,8 +5,7 @@ from wx.lib.agw import ultimatelistctrl as ULC
 class MyWindow(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(600, 500))
-        ico = wx.Icon('./ico1.ico', wx.BITMAP_TYPE_ICO)
-        self.SetIcon((ico))
+
         menu = wx.Menu()
         self.aboutItem = menu.Append(wx.ID_ABOUT, "Информация", "кнопка about")
         self.exitItem = menu.Append(wx.ID_EXIT, "Выход\tCTRL+Q", "кнопка exit")
@@ -68,9 +67,9 @@ class MyWindow(wx.Frame):
         self.buttonParse = wx.Button(self.mainPanel, wx.ID_ANY, label="Спарсить", size=(90, 30))
         self.buttonClearAllUlc = wx.Button(self.mainPanel, wx.ID_ANY, label="Очистить все", size=(90, 30))
         self.buttonDeleteRow = wx.Button(self.mainPanel, wx.ID_ANY, label="Удалить файл", size=(90, 30))
-        h_box7.Add(self.buttonDeleteRow, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10)
-        h_box7.Add(self.buttonClearAllUlc, flag=wx.EXPAND | wx.RIGHT, border=250)
-        h_box7.Add(self.buttonParse, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10)
+        h_box7.Add(self.buttonDeleteRow, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
+        h_box7.Add(self.buttonClearAllUlc, flag=wx.ALIGN_LEFT | wx.RIGHT, border=250)
+        h_box7.Add(self.buttonParse,  flag=wx.LEFT | wx.RIGHT, border=10)
 
         # Добавление элементов в главный сайзер приложения VBOX
         self.vbox.Add(v_box1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
@@ -79,7 +78,7 @@ class MyWindow(wx.Frame):
         self.vbox.Add(h_box4, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(h_box5, proportion=1, flag=wx.EXPAND | wx.BOTTOM | wx.TOP, border=10)
         self.vbox.Add(h_box6, flag=wx.EXPAND)
-        self.vbox.Add(h_box7, flag=wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
+        self.vbox.Add(h_box7, flag=wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
 
         # Добавление VBOX на главную панель рабочей области
         self.mainPanel.SetSizer(self.vbox)
