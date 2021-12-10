@@ -1,4 +1,4 @@
-from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader
+from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, resultCreater
 
 
 class Parser:
@@ -29,7 +29,8 @@ class Parser:
         values = list(dic.values())[0]
         return self.choose_file_parser(str(keys), str(values))
 
-
+    def get_result_data(self, data):
+        return resultCreater.ResultCreater(data).createResultList()
 
     def parse_supplier(self, file_path, article_column, price_column):
         return supplierParser.SupplierParser(self.fr.get_data_list(file_path),

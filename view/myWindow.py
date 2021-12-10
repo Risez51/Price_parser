@@ -5,6 +5,8 @@ from wx.lib.agw import ultimatelistctrl as ULC
 class MyWindow(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(600, 500))
+        ico = wx.Icon('./ico1.ico', wx.BITMAP_TYPE_ICO)
+        self.SetIcon((ico))
         menu = wx.Menu()
         self.aboutItem = menu.Append(wx.ID_ABOUT, "Информация", "кнопка about")
         self.exitItem = menu.Append(wx.ID_EXIT, "Выход\tCTRL+Q", "кнопка exit")

@@ -1,6 +1,4 @@
-from view import mainForm
 import wx
-from view import myWindow
 from controller import controllers
 
 

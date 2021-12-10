@@ -1,6 +1,6 @@
 import sys
 
-from model import resultCreater, fileReader, parser, viewData
+from model import fileReader, parser, viewData
 import wx
 from wx.lib.agw import ultimatelistctrl as ULC
 from view import myWindow
@@ -17,6 +17,9 @@ class Controllers(object):
         self.all_files_dict = {}
 
         # Binds
+        self.frame.Bind(wx.EVT_MENU, self.onExit, self.frame.exitItem)
+        self.frame.Bind(wx.EVT_MENU, self.onAbout, self.frame.aboutItem)
+
         self.frame.Bind(wx.EVT_BUTTON, self.add_cheescake_preport, self.frame.buttonOpenCheesCakeFile)
         self.frame.Bind(wx.EVT_BUTTON, self.add_comparision_report, self.frame.buttonOpenComparisionFile)
         self.frame.Bind(wx.EVT_BUTTON, self.add_supplier_files, self.frame.buttonOpenSupplierPrices)
@@ -29,13 +32,11 @@ class Controllers(object):
         with self.open_file_dialog() as ofd:
             self.all_files_dict["Отчет чизкейк"] = ofd.GetPath()
             self.frame.input_CheesCake.LabelText = ofd.GetFilename()
-            print(self.all_files_dict)
 
     def add_comparision_report(self, event):
         with self.open_file_dialog() as ofd:
             self.all_files_dict["Таблица соответствий"] = ofd.GetPath()
             self.frame.input_comparision.LabelText = ofd.GetFilename()
-            print(self.all_files_dict)
 
     def add_supplier_files(self, event):
         with self.open_files_dialog() as dlg:
@@ -87,10 +88,6 @@ class Controllers(object):
         if self.validating_frame_data():
             self.frame.progress_bar.SetValue(20)
             self.get_suppliers_list()
-            self.frame.progress_bar.SetValue(50)
-            rs = resultCreater.ResultCreater(self.all_files_dict).createResultList()
-            self.frame.progress_bar.SetValue(80)
-            self.export_to_excel(rs)
             self.frame.progress_bar.SetValue(100)
 
     def get_suppliers_list(self):
@@ -116,6 +113,8 @@ class Controllers(object):
             except:
                 self.error_massage(f"{file_name}: некорректный формат ")
                 sys.exit()
+        self.export_to_excel(my_parser.get_result_data(self.all_files_dict))
+
 
     def validating_frame_data(self):
         if self.frame.input_CheesCake.LabelText == "":
@@ -144,3 +143,11 @@ class Controllers(object):
 
     def export_to_excel(self, my_data):
         fileReader.FileReader().to_excel(my_data)
+
+    def onAbout(self, event):
+        dlg = wx.MessageDialog(self.frame, "По вопросам о работе программы пишите: \n  i.rudometkin@instrland.ru", "О программе", wx.OK)
+        dlg.ShowModal()
+
+    def onExit(self, event):
+        wx.Exit()
+        pass
