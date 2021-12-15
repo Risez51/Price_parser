@@ -67,7 +67,7 @@ class ResultCreater:
 
                                "Мир инструментов 1, артикул": comparisionItem.mirInstrumentov1_article,
                                "Мир инструментов 1, цена": price_mir_instrumetnov_1,
-                               "Мир инструментов 1,, разница в цене": self.get_procent_difference(
+                               "Мир инструментов 1, разница в цене": self.get_procent_difference(
                                    price_mir_instrumetnov_1, uchItem.selling_price),
                                "Мир инструментов 1, бренд": comparisionItem.mirInstrumentov1_brand,
 

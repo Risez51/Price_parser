@@ -1,4 +1,4 @@
-from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, resultCreater
+from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, resultCreater, productsComposer
 
 
 class Parser:
@@ -30,7 +30,8 @@ class Parser:
         return self.choose_file_parser(str(keys), str(values))
 
     def get_result_data(self, data):
-        return resultCreater.ResultCreater(data).createResultList()
+       # return resultCreater.ResultCreater(data).createResultList()
+        return productsComposer.ProductsComposer(data).create_result()
 
     def parse_supplier(self, file_path, article_column, price_column):
         return supplierParser.SupplierParser(self.fr.get_data_list(file_path),
