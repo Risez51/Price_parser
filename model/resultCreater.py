@@ -86,14 +86,6 @@ class ResultCreater:
                     return f'{self.get_float_from_price(supplierProduct.price) / 1.2:.2f}'
         return ""
 
-    def get_price_with_other_expenses(self, price, brand):
-        if brand == "SHAN DONG DONGPING JIUXIN HARDWARE TOOLS CO.,LTD" or \
-                brand == "QINGDAO LEAD WORLD IMP&EXP CO., LTD":
-            return price * 1.2
-        elif brand == "SHANGHAI UNI-STAR INDUSTRIAL & TRADING CO., LTD":
-            return price * 1.1
-        else:
-            return price
 
     def get_procent_difference(self, price_supplier, price_holding):
         if price_holding == 0 or price_holding == "0" or price_supplier == 0.00 or price_supplier == "0.00" or price_supplier == "":
@@ -104,8 +96,18 @@ class ResultCreater:
         procent = (p_sup / one_procent) - 100
         return f'{procent:.2f}%'
 
+    @staticmethod
+    def get_price_with_other_expenses(price, brand):
+        if brand == "SHAN DONG DONGPING JIUXIN HARDWARE TOOLS CO.,LTD" or \
+                brand == "QINGDAO LEAD WORLD IMP&EXP CO., LTD":
+            return price * 1.2
+        elif brand == "SHANGHAI UNI-STAR INDUSTRIAL & TRADING CO., LTD":
+            return price * 1.1
+        else:
+            return price
 
-    def get_float_from_price(self, price):
+    @staticmethod
+    def get_float_from_price(price):
         if type(price) == int or type(price) == float:
             return price
         else:
@@ -115,7 +117,8 @@ class ResultCreater:
                 print(price)
                 return 0
 
-    def get_uchItem(self, article, uchList: list):
+    @staticmethod
+    def get_uchItem(article, uchList: list):
         for item in uchList:
             if article == item.article:
                 return item

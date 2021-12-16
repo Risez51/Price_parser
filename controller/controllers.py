@@ -96,13 +96,13 @@ class Controllers(object):
             self.all_files_dict.update(
             my_parser.get_products_list({"Отчет чизкейк": self.all_files_dict.get("Отчет чизкейк")}))
         except:
-            self.error_massage("Отчет чизкейк: некорректный формат")
+            self.error_message("Отчет чизкейк: некорректный формат")
             sys.exit()
         try:
             self.all_files_dict.update(
             my_parser.get_products_list({"Таблица соответствий": self.all_files_dict.get("Таблица соответствий")}))
         except:
-            self.error_massage("Таблица соответствий: некорректный формат")
+            self.error_message("Таблица соответствий: некорректный формат")
             sys.exit()
         for i in range(0, self.frame.ulc.GetItemCount()):
             file_name = self.frame.ulc.GetItemText(i)
@@ -111,23 +111,23 @@ class Controllers(object):
                 self.all_files_dict.update(
                 my_parser.get_products_list({f'{sup_name}': self.get_path_by_file_name(file_name)}))
             except:
-                self.error_massage(f"{file_name}: некорректный формат ")
+                self.error_message(f"{file_name}: некорректный формат ")
                 sys.exit()
         self.export_to_excel(my_parser.get_result_data(self.all_files_dict))
 
 
     def validating_frame_data(self):
         if self.frame.input_CheesCake.LabelText == "":
-            self.error_massage(f"Отсутствует отчет чизкейк")
+            self.error_message("Отсутствует отчет чизкейк")
             return False
         elif self.frame.input_comparision.LabelText == "":
-            self.error_massage(f"Отсутствует таблица соответствий")
+            self.error_message("Отсутствует таблица соответствий")
             return False
         for i in range(0, self.frame.ulc.GetItemCount()):
             combobox = self.frame.ulc.GetItemWindow(i, 1)
             sup_name = combobox.GetString(combobox.GetSelection())
             if sup_name == "":
-                self.error_massage(f"Не выбран поставщик для файла: {self.frame.ulc.GetItemText(i)}")
+                self.error_message(f"Не выбран поставщик для файла: {self.frame.ulc.GetItemText(i)}")
                 return False
         return True
 
@@ -137,7 +137,7 @@ class Controllers(object):
                 return self.path_list[i]
         return ""
 
-    def error_massage(self, text):
+    def error_message(self, text):
         dlg = wx.MessageDialog(self.frame, f"{text}", "Ошибка", wx.OK)
         dlg.ShowModal()
 

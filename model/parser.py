@@ -1,4 +1,4 @@
-from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, resultCreater, productsComposer
+from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, productsComposer
 
 
 class Parser:
@@ -21,6 +21,30 @@ class Parser:
             return {file_tag: self.parse_supplier(file_path, 0, 7)}
         elif file_tag == "Ипц":
             return {file_tag: self.parse_supplier(file_path, 0, 2)}
+        elif file_tag == "Дело техники":
+            return {file_tag: self.parse_supplier(file_path, 0, 5)}
+        elif file_tag == "Ипк":
+            return {file_tag: self.parse_supplier(file_path, 0, 2)}
+        elif file_tag == "ТДСЗ":
+            return {file_tag: self.parse_supplier(file_path, 7, 12)}
+        elif file_tag == "КЭМ":
+            return {file_tag: self.parse_supplier(file_path, 1, 5)}
+        elif file_tag == "Инфорком":
+            return {file_tag: self.parse_supplier(file_path, 2, 5)}
+        elif file_tag == "Волжский":
+            return {file_tag: self.parse_supplier(file_path, 0, 5)}
+        elif file_tag == "Ручные инструменты":
+            return {file_tag: self.parse_supplier(file_path, 3, 4)}
+        elif file_tag == "Кибер инструмент":
+            return {file_tag: self.parse_supplier(file_path, 0, 4)}
+        elif file_tag == "Туламаш":
+            return {file_tag: self.parse_supplier(file_path, 0, 5)}
+        elif file_tag == "Железный мир":
+            return {file_tag: self.parse_supplier(file_path, 0, 2)}
+        elif file_tag == "Дтл":
+            return {file_tag: self.parse_supplier(file_path, 1, 2)}
+        elif file_tag == "Наш прайс":
+            return {file_tag: self.parse_supplier(file_path, 0, 3)}
         else:
             return []
 
@@ -30,7 +54,7 @@ class Parser:
         return self.choose_file_parser(str(keys), str(values))
 
     def get_result_data(self, data):
-       # return resultCreater.ResultCreater(data).createResultList()
+        #return resultCreater.ResultCreater(data).createResultList()
         return productsComposer.ProductsComposer(data).create_result()
 
     def parse_supplier(self, file_path, article_column, price_column):

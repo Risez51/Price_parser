@@ -11,14 +11,14 @@ class UnloadedCheescakeParser:
     def get_products_list(self, path_to_file):
         result_list = []
         for item in self.fr.get_data_list(path_to_file):
-            ichItem = unloadedCheescakeItem.UnloadedCheescakeItem()
-            ichItem.article = str(item[0]).strip()
-            ichItem.name = item[1]
-            ichItem.purchase_price = item[2]
-            ichItem.supplier = item[4]
-            ichItem.orderDate = item[5].date()
-            ichItem.stock = item[6]
-            ichItem.selling_price = item[7]
-            ichItem.group = item[8]
-            result_list.append(ichItem)
+            uchItem = unloadedCheescakeItem.UnloadedCheescakeItem()
+            uchItem.article = str(item[0]).strip()
+            uchItem.name = item[1]
+            uchItem.purchase_price = item[2]
+            uchItem.supplier = item[4]
+            uchItem.orderDate = item[5].date()
+            uchItem.stock = item[6]
+            uchItem.selling_price = item[7]
+            uchItem.group = item[8]
+            result_list.append(uchItem)
         return result_list
