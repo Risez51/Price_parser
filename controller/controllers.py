@@ -1,5 +1,4 @@
 import sys
-
 from model import fileReader, parser, viewData
 import wx
 from wx.lib.agw import ultimatelistctrl as ULC
@@ -25,30 +24,33 @@ class Controllers(object):
         self.frame.Bind(wx.EVT_BUTTON, self.add_supplier_files, self.frame.buttonOpenSupplierPrices)
 
         self.frame.Bind(wx.EVT_BUTTON, self.del_ulc_row, self.frame.buttonDeleteRow)
-        self.frame.Bind(wx.EVT_BUTTON, self.clearULC, self.frame.buttonClearAllUlc)
+        self.frame.Bind(wx.EVT_BUTTON, self.clear_ulc_items, self.frame.buttonClearAllUlc)
         self.frame.Bind(wx.EVT_BUTTON, self.start_parse, self.frame.buttonParse)
 
     def add_cheescake_preport(self, event):
-        with self.open_file_dialog() as ofd:
+        with self.open_files_dialog(wx.FD_OPEN) as ofd:
             self.all_files_dict["Отчет чизкейк"] = ofd.GetPath()
             self.frame.input_CheesCake.LabelText = ofd.GetFilename()
 
     def add_comparision_report(self, event):
-        with self.open_file_dialog() as ofd:
+        with self.open_files_dialog(wx.FD_OPEN) as ofd:
             self.all_files_dict["Таблица соответствий"] = ofd.GetPath()
             self.frame.input_comparision.LabelText = ofd.GetFilename()
 
+    #Добавление items в ULC
     def add_supplier_files(self, event):
-        with self.open_files_dialog() as dlg:
+        with self.open_files_dialog(wx.FD_MULTIPLE) as dlg:
             self.add_ulc_items(dlg)
             self.path_list += list(dlg.GetPaths())
 
+    #Создает item для ULC
     def add_ulc_items(self, dlg):
         file_names = dlg.GetFilenames()
-        for i in range(0, len(file_names)):
+        for i in range(len(file_names)):
             self.frame.ulc.InsertStringItem(i, file_names[i])
             self.frame.ulc.SetItemWindow(i, 1, self.create_combobox_ulc(), ULC.ULC_ALIGN_LEFT)
 
+    #Создает комбобокс на виджете ULC
     def create_combobox_ulc(self):
         combobox = wx.Choice(self.frame.ulc)
         combobox.AppendItems(self.view_data.all_supplier_list)
@@ -58,31 +60,26 @@ class Controllers(object):
     def doNothing(self, event):
         pass
 
-    def open_files_dialog(self):
+    #Файл диалог - в аргументах стиль wx.FD_OPEN - для выбора 1 файла, wx.FD_MULTIPLE - для нескольких
+    def open_files_dialog(self, param):
         dlg = wx.FileDialog(
             self.frame, message="Добавить файлы...",
             defaultDir=".",
-            defaultFile="", wildcard="*.xls; *.xlsx; *.csv", style=wx.FD_MULTIPLE)
+            defaultFile="", wildcard="*.xls; *.xlsx; *.csv", style=param)
         if dlg.ShowModal() == wx.ID_OK or wx.ID_EXIT:
             return dlg
         dlg.Destroy()
+
 
     def del_ulc_row(self, event):
         if self.frame.ulc.GetFocusedItem() > -1:
             self.frame.ulc.DeleteItem(self.frame.ulc.GetFocusedItem())
 
-    def clearULC(self, event):
+    def clear_ulc_items(self, event):
         self.frame.ulc.DeleteAllItems()
         self.view_data.supplierFiles = ""
 
-    def open_file_dialog(self):
-        dlg = wx.FileDialog(
-            self.frame, message="Добавить файл...",
-            defaultDir=".",
-            defaultFile="", wildcard="*.xls; *.xlsx; *.csv", style=wx.FD_OPEN)
-        if dlg.ShowModal() == wx.ID_OK or wx.ID_EXIT:
-            return dlg
-        dlg.Destroy()
+
 
     def start_parse(self, event):
         if self.validating_frame_data():

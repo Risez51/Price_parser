@@ -13,29 +13,29 @@ class ProductsComposer:
         for comparision_item in self.comparisionList:
 
             uch_item = self.get_uchItem(comparision_item.holding_article)
-
-            price_with_expenses = self.get_price_expenses(uch_item.purchase_price,
-                                                          uch_item.supplier)
-
-            result_item = {"Холдинг, артикул": comparision_item.holding_article,
-                           "Холдинг, наименование": comparision_item.holding_name,
-                           "Холдинг, группа": comparision_item.holding_group,
-                           "Холдинг, цена закупки с учетом прочих расходов": price_with_expenses,
-                           "Холдинг, цена продажи": uch_item.selling_price,
-                           "Холдинг, остатки": uch_item.stock,
-                           "Холдинг, поставщик": uch_item.supplier,
-                           "Холдинг, дата размещения": uch_item.orderDate}
+            result_item_dict = self.get_holding_dict_params(uch_item, comparision_item)
 
             for supplier_name in self.products_dict:
                 my_dict = self.get_supplier_params(supplier_name,
                                                    self.products_dict.get(supplier_name),
                                                    comparision_item.get_values(supplier_name),
                                                    uch_item.selling_price)
-                result_item.update(my_dict)
+                result_item_dict.update(my_dict)
 
-            result_list.append(result_item)
+            result_list.append(result_item_dict)
         return result_list
 
+    def get_holding_dict_params(self, uch_item, comparision_item):
+        result_item = {"Холдинг, артикул": comparision_item.holding_article,
+                       "Холдинг, наименование": comparision_item.holding_name,
+                       "Холдинг, группа": comparision_item.holding_group,
+                       "Холдинг, цена закупки с учетом прочих расходов": self.get_price_expenses(uch_item.purchase_price,
+                                                                                                 uch_item.supplier),
+                       "Холдинг, цена продажи": uch_item.selling_price,
+                       "Холдинг, остатки": uch_item.stock,
+                       "Холдинг, поставщик": uch_item.supplier,
+                       "Холдинг, дата размещения": uch_item.orderDate}
+        return result_item
 
 
     def get_supplier_params(self, supplier_name, products_list, supplier_articles_brands_dict, holding_price):
@@ -82,12 +82,6 @@ class ProductsComposer:
                 return uch_item
         return unloadedCheescakeItem.UnloadedCheescakeItem()
 
-    #arr1 = [[123, 234, 456], [923, 934, 956]]
-    #find = 923
-    #a = [item1 for item in arr1 for item1 in item if item1 == find]
-
-
-
     def get_procent_difference(self, supplier_price, holding_price):
         if holding_price == 0 or holding_price == "0" or supplier_price == 0.00 or supplier_price == "0.00" or supplier_price == "":
             return ""
@@ -98,7 +92,6 @@ class ProductsComposer:
         procent = (p_sup / one_procent) - 100
         return f'{procent:.2f}%'
 
-
     def get_price_expenses(self, holding_purchase_price, holding_supplier_brand):
         if holding_supplier_brand == "SHAN DONG DONGPING JIUXIN HARDWARE TOOLS CO.,LTD" or \
                 holding_supplier_brand == "QINGDAO LEAD WORLD IMP&EXP CO., LTD":
@@ -108,10 +101,6 @@ class ProductsComposer:
         else:
             return self.get_float_from_price(holding_purchase_price)
 
-
     def get_float_from_price(self, price):
-        try:
-            return float(price)
-        except:
-            #print(price)
-            return 0
+        return float(price) if float(price) else 0
+

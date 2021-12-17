@@ -1,15 +1,15 @@
-from model import comparisionItem, fileReader
+from model import comparisionItem, fileReader, config
 
 
 class ComparisionParser:
 
     def __init__(self):
-        self.fr = fileReader.FileReader()
-        pass
+        self.file_reader = fileReader.FileReader()
+        self.cnfg = config.Config()
 
     def get_products_list(self, path_to_file):
         comparisionList = []
-        for item in self.fr.get_data_list(path_to_file):
+        for item in self.file_reader.get_data_list(path_to_file):
             compItem = comparisionItem.ComparisionItem()
             compItem.holding_name = item[1]
             compItem.holding_article = self.fix_str(item[0])
@@ -105,18 +105,20 @@ class ComparisionParser:
             compItem.nash_price_brand_minz = item[75]
 
             comparisionList.append(compItem)
-           # print(f'compItem.nash_price_article_skinz: {compItem.nash_price_article_skinz}\n'
+            #Принты для отладки входящих артикулов в файле "Таблица соответствий"
+            #print(f'compItem.nash_price_article_skinz: {compItem.nash_price_article_skinz}\n'
             #      f' compItem.nash_price_brand_skinz:{compItem.nash_price_brand_skinz}')
         return comparisionList
 
+    #Обрезает пробелы слева и справа
     @staticmethod
     def fix_str(value):
         return str(value).strip()
 
+    #Артикул в прайсе имеет длину 6 (ноли перед артикулом, например 000001), в таблице соответствий
+    #данный артикул хранится со значением 1 - функция дополняет артикул нолями.
     def fix_kem_article(self, article):
-        if article == "nan" or article == "0" or article == "":
-            pass
-        else:
+        if article != "nan" or article != "0" or article != "":
             article = str(article).replace(".0", "")
             while len(article) < 6:
                 article = "0" + article

@@ -29,11 +29,4 @@ class SupplierParser:
 
     @staticmethod
     def is_product(article, price):
-        #print(f'атикул:{article}, цена:{price}')
-        if str(article) == "nan" or str(price) == "nan" or len(str(article)) == 0 or article == 0:
-           # print("Непрошла")
-            return False
-        else:
-           # print("Прошла")
-            return True
-        #return str(article) != "nan" or str(price) != "nan" or len(str(article)) != 0 or article != 0
+        return str(article) != "nan" or str(price) != "nan" or len(str(article)) != 0 or article != 0 or price != 0.0 or price != 0

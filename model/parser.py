@@ -1,4 +1,4 @@
-from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, productsComposer
+from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, productsComposer, config
 
 
 class Parser:
@@ -7,54 +7,22 @@ class Parser:
         self.fr = fileReader.FileReader()
 
     def choose_file_parser(self,  file_tag, file_path):
+        conf = config.Config()
         if file_tag == "Отчет чизкейк":
             return {file_tag: unloadedCheescakeParser.UnloadedCheescakeParser().get_products_list(file_path)}
         elif file_tag == "Таблица соответствий":
             return {file_tag: comparisionParser.ComparisionParser().get_products_list(file_path)}
-        elif file_tag == "Дарси":
-            return {file_tag: self.parse_supplier(file_path, 2, 4)}
-        elif file_tag == "Мир инструментов":
-            return {file_tag: self.parse_supplier(file_path, 0, 8)}
-        elif file_tag == "Белый медведь":
-            return {file_tag: self.parse_supplier(file_path, 1, 3)}
-        elif file_tag == "Автоключ":
-            return {file_tag: self.parse_supplier(file_path, 0, 7)}
-        elif file_tag == "Ипц":
-            return {file_tag: self.parse_supplier(file_path, 0, 2)}
-        elif file_tag == "Дело техники":
-            return {file_tag: self.parse_supplier(file_path, 0, 5)}
-        elif file_tag == "Ипк":
-            return {file_tag: self.parse_supplier(file_path, 0, 2)}
-        elif file_tag == "ТДСЗ":
-            return {file_tag: self.parse_supplier(file_path, 7, 12)}
-        elif file_tag == "КЭМ":
-            return {file_tag: self.parse_supplier(file_path, 1, 5)}
-        elif file_tag == "Инфорком":
-            return {file_tag: self.parse_supplier(file_path, 2, 5)}
-        elif file_tag == "Волжский":
-            return {file_tag: self.parse_supplier(file_path, 0, 5)}
-        elif file_tag == "Ручные инструменты":
-            return {file_tag: self.parse_supplier(file_path, 3, 4)}
-        elif file_tag == "Кибер инструмент":
-            return {file_tag: self.parse_supplier(file_path, 0, 4)}
-        elif file_tag == "Туламаш":
-            return {file_tag: self.parse_supplier(file_path, 0, 5)}
-        elif file_tag == "Железный мир":
-            return {file_tag: self.parse_supplier(file_path, 0, 2)}
-        elif file_tag == "Дтл":
-            return {file_tag: self.parse_supplier(file_path, 1, 2)}
-        elif file_tag == "Наш прайс":
-            return {file_tag: self.parse_supplier(file_path, 0, 3)}
         else:
-            return []
+            return {file_tag: self.parse_supplier(file_path,
+                                                  conf.get_article_column_index(file_tag),
+                                                  conf.get_price_column_index(file_tag))}
 
-    def get_products_list(self, dic):
-        keys = list(dic.keys())[0]
-        values = list(dic.values())[0]
-        return self.choose_file_parser(str(keys), str(values))
+    #Вход: словарь {имя_поставщика: путь к файлу}
+    def get_products_list(self, dictionary):
+        for file_tag in dictionary:
+            return self.choose_file_parser(str(file_tag), str(dictionary.get(file_tag)))
 
     def get_result_data(self, data):
-        #return resultCreater.ResultCreater(data).createResultList()
         return productsComposer.ProductsComposer(data).create_result()
 
     def parse_supplier(self, file_path, article_column, price_column):

@@ -1,19 +1,5 @@
+from model import config
 class ViewData:
     def __init__(self):
         self.supplierFiles = []
-        self.all_supplier_list = ["Дарси",
-                                  "Мир инструментов",
-                                  "Белый медведь",
-                                  "Автоключ",
-                                  "Ипц","Ипк",
-                                  "Дело техники",
-                                  "ТДСЗ",
-                                  "КЭМ",
-                                  "Инфорком",
-                                  "Волжский",
-                                  "Ручные инструменты",
-                                  "Кибер инструмент",
-                                  "Туламаш",
-                                  "Железный мир",
-                                  "Дтл",
-                                  "Наш прайс"]
+        self.all_supplier_list = config.Config().supplier_names
