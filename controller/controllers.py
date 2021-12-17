@@ -25,27 +25,27 @@ class Controllers(object):
 
         self.frame.Bind(wx.EVT_BUTTON, self.del_ulc_row, self.frame.buttonDeleteRow)
         self.frame.Bind(wx.EVT_BUTTON, self.clear_ulc_items, self.frame.buttonClearAllUlc)
-        self.frame.Bind(wx.EVT_BUTTON, self.start_parse, self.frame.buttonParse)
+        self.frame.Bind(wx.EVT_BUTTON, self.start_parsing, self.frame.buttonParse)
 
     def add_cheescake_preport(self, event):
         with self.open_files_dialog(wx.FD_OPEN) as ofd:
-            self.all_files_dict["Отчет чизкейк"] = ofd.GetPath()
+            self.all_files_dict['Отчет чизкейк'] = ofd.GetPath()
             self.frame.input_CheesCake.LabelText = ofd.GetFilename()
 
     def add_comparision_report(self, event):
         with self.open_files_dialog(wx.FD_OPEN) as ofd:
-            self.all_files_dict["Таблица соответствий"] = ofd.GetPath()
+            self.all_files_dict['Таблица соответствий'] = ofd.GetPath()
             self.frame.input_comparision.LabelText = ofd.GetFilename()
 
     #Добавление items в ULC
     def add_supplier_files(self, event):
-        with self.open_files_dialog(wx.FD_MULTIPLE) as dlg:
-            self.add_ulc_items(dlg)
-            self.path_list += list(dlg.GetPaths())
+        with self.open_files_dialog(wx.FD_MULTIPLE) as file_dialog:
+            self.add_ulc_items(file_dialog)
+            self.path_list += list(file_dialog.GetPaths())
 
     #Создает item для ULC
-    def add_ulc_items(self, dlg):
-        file_names = dlg.GetFilenames()
+    def add_ulc_items(self, file_dialog):
+        file_names = file_dialog.GetFilenames()
         for i in range(len(file_names)):
             self.frame.ulc.InsertStringItem(i, file_names[i])
             self.frame.ulc.SetItemWindow(i, 1, self.create_combobox_ulc(), ULC.ULC_ALIGN_LEFT)
@@ -62,44 +62,49 @@ class Controllers(object):
 
     #Файл диалог - в аргументах стиль wx.FD_OPEN - для выбора 1 файла, wx.FD_MULTIPLE - для нескольких
     def open_files_dialog(self, param):
-        dlg = wx.FileDialog(
-            self.frame, message="Добавить файлы...",
+        file_dialog = wx.FileDialog(
+            self.frame,
+            message="Добавить файлы...",
             defaultDir=".",
-            defaultFile="", wildcard="*.xls; *.xlsx; *.csv", style=param)
-        if dlg.ShowModal() == wx.ID_OK or wx.ID_EXIT:
-            return dlg
-        dlg.Destroy()
+            defaultFile="",
+            wildcard="*.xls; *.xlsx; *.csv",
+            style=param)
+        if file_dialog.ShowModal() == wx.ID_OK or wx.ID_EXIT:
+            return file_dialog
+        file_dialog.Destroy()
 
-
+    # Удаляет строку со значениями компонента ULC
     def del_ulc_row(self, event):
         if self.frame.ulc.GetFocusedItem() > -1:
             self.frame.ulc.DeleteItem(self.frame.ulc.GetFocusedItem())
 
+    # Очистка содержимого компонента ULC
     def clear_ulc_items(self, event):
         self.frame.ulc.DeleteAllItems()
         self.view_data.supplierFiles = ""
 
 
-
-    def start_parse(self, event):
+    # Старт парсинга - срабатывает, при нажатие на кнопку "Спарсить"
+    def start_parsing(self, event):
         if self.validating_frame_data():
             self.frame.progress_bar.SetValue(20)
             self.get_suppliers_list()
             self.frame.progress_bar.SetValue(100)
 
+    # Возвращает словарь {supplier_name: путь к файлу}, где supplier_name - то, что выбрал юзер в combobox
     def get_suppliers_list(self):
         my_parser = parser.Parser()
         try:
             self.all_files_dict.update(
-            my_parser.get_products_list({"Отчет чизкейк": self.all_files_dict.get("Отчет чизкейк")}))
+            my_parser.get_products_list({'Отчет чизкейк': self.all_files_dict.get('Отчет чизкейк')}))
         except:
-            self.error_message("Отчет чизкейк: некорректный формат")
+            self.error_message('Отчет чизкейк: некорректный формат')
             sys.exit()
         try:
             self.all_files_dict.update(
-            my_parser.get_products_list({"Таблица соответствий": self.all_files_dict.get("Таблица соответствий")}))
+            my_parser.get_products_list({'Таблица соответствий': self.all_files_dict.get('Таблица соответствий')}))
         except:
-            self.error_message("Таблица соответствий: некорректный формат")
+            self.error_message('Таблица соответствий: некорректный формат')
             sys.exit()
         for i in range(0, self.frame.ulc.GetItemCount()):
             file_name = self.frame.ulc.GetItemText(i)
@@ -108,26 +113,27 @@ class Controllers(object):
                 self.all_files_dict.update(
                 my_parser.get_products_list({f'{sup_name}': self.get_path_by_file_name(file_name)}))
             except:
-                self.error_message(f"{file_name}: некорректный формат ")
+                self.error_message(f'{file_name}: некорректный формат ')
                 sys.exit()
         self.export_to_excel(my_parser.get_result_data(self.all_files_dict))
 
-
+    # Валидация заполненности визуальной формы
     def validating_frame_data(self):
-        if self.frame.input_CheesCake.LabelText == "":
-            self.error_message("Отсутствует отчет чизкейк")
+        if self.frame.input_CheesCake.LabelText == '':
+            self.error_message('Отсутствует отчет чизкейк')
             return False
         elif self.frame.input_comparision.LabelText == "":
-            self.error_message("Отсутствует таблица соответствий")
+            self.error_message('Отсутствует таблица соответствий')
             return False
         for i in range(0, self.frame.ulc.GetItemCount()):
             combobox = self.frame.ulc.GetItemWindow(i, 1)
             sup_name = combobox.GetString(combobox.GetSelection())
-            if sup_name == "":
-                self.error_message(f"Не выбран поставщик для файла: {self.frame.ulc.GetItemText(i)}")
+            if sup_name == '':
+                self.error_message(f'Не выбран поставщик для файла: {self.frame.ulc.GetItemText(i)}')
                 return False
         return True
 
+    # Возвращает путь к файлу, принимает имя файла.
     def get_path_by_file_name(self, file_name):
         for i in range(len(self.path_list)):
             if file_name in self.path_list[i]:
@@ -135,14 +141,17 @@ class Controllers(object):
         return ""
 
     def error_message(self, text):
-        dlg = wx.MessageDialog(self.frame, f"{text}", "Ошибка", wx.OK)
+        dlg = wx.MessageDialog(self.frame, f'{text}', 'Ошибка', wx.OK)
         dlg.ShowModal()
 
     def export_to_excel(self, my_data):
         fileReader.FileReader().to_excel(my_data)
 
     def onAbout(self, event):
-        dlg = wx.MessageDialog(self.frame, "По вопросам о работе программы пишите: \n  i.rudometkin@instrland.ru", "О программе", wx.OK)
+        dlg = wx.MessageDialog(self.frame,
+                               'По вопросам о работе программы пишите: \n  i.rudometkin@instrland.ru',
+                               'О программе',
+                               wx.OK)
         dlg.ShowModal()
 
     def onExit(self, event):
