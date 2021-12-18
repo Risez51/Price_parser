@@ -19,12 +19,12 @@ class MyWindow(wx.Frame):
 
         # Первая строка (добавление файла: отчет/выгрузка(china2) из CheesCake)
         v_box1 = wx.BoxSizer(wx.HORIZONTAL)
-        label_CheesCake = wx.StaticText(self.mainPanel, label="Отчет чизкейк:")
-        self.input_CheesCake = wx.TextCtrl(self.mainPanel, style=wx.TE_READONLY)
-        self.buttonOpenCheesCakeFile = wx.Button(self.mainPanel, wx.ID_ANY, "Добавить")
-        v_box1.Add(label_CheesCake, flag=wx.RIGHT, border=8)
-        v_box1.Add(self.input_CheesCake, proportion=1)
-        v_box1.Add(self.buttonOpenCheesCakeFile, flag=wx.RIGHT | wx.LEFT, border=8)
+        label_cheescake = wx.StaticText(self.mainPanel, label="Отчет чизкейк:")
+        self.input_cheescake = wx.TextCtrl(self.mainPanel, style=wx.TE_READONLY)
+        self.button_cheescake = wx.Button(self.mainPanel, wx.ID_ANY, "Добавить")
+        v_box1.Add(label_cheescake, flag=wx.RIGHT, border=8)
+        v_box1.Add(self.input_cheescake, proportion=1)
+        v_box1.Add(self.button_cheescake, flag=wx.RIGHT | wx.LEFT, border=8)
 
         # линия сепаратор 15
         h_box3 = wx.BoxSizer(wx.HORIZONTAL)

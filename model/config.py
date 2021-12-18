@@ -1,4 +1,5 @@
 import configparser
+from model import unloadedCheescakeItem
 
 
 class Config:
@@ -19,5 +20,25 @@ class Config:
     def get_price_column_index(self, supplier_name):
         return int(self.config_parser.get('Column_price', supplier_name))
 
+    # Возвращает номер колодки в таблице соответствий
     def get_comparison_column_index(self, name):
         return int(self.config_parser.get('Comparison_column', name))
+
+    def cheescake_report_name(self):
+        return str(self.config_parser.get('Reports', 'cheescake_report'))
+
+    def comparison_report_name(self):
+        return str(self.config_parser.get('Reports', 'comparison_report'))
+
+    def get_cheescake_indexes(self):
+        uch_indexes = unloadedCheescakeItem.UnloadedCheescakeItem()
+        uch_indexes.article = int(self.config_parser.get('Cheescake_columns', 'article'))
+        uch_indexes.name = int(self.config_parser.get('Cheescake_columns', 'name'))
+        uch_indexes.supplier_name = int(self.config_parser.get('Cheescake_columns', 'supplier_name'))
+        uch_indexes.purchase_price = int(self.config_parser.get('Cheescake_columns', 'purchase_price'))
+        uch_indexes.selling_price = int(self.config_parser.get('Cheescake_columns', 'selling_price'))
+        uch_indexes.stock = int(self.config_parser.get('Cheescake_columns', 'stock'))
+        uch_indexes.order_date = int(self.config_parser.get('Cheescake_columns', 'order_date'))
+        uch_indexes.group = int(self.config_parser.get('Cheescake_columns', 'group'))
+        return uch_indexes
+

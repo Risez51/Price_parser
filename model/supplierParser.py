@@ -21,7 +21,7 @@ class SupplierParser:
                                                        excel_row[self.price_column]))
 
     def new_product(self, article, price):
-        return supplierProduct.SupplierProduct(self.fix_str(article), price)
+        return supplierProduct.SupplierProduct(self.fix_str(article), self.fix_str(price))
 
     @staticmethod
     def fix_str(value):
@@ -29,4 +29,4 @@ class SupplierParser:
 
     @staticmethod
     def is_product(article, price):
-        return str(article) != "nan" or str(price) != "nan" or len(str(article)) != 0 or article != 0 or price != 0.0 or price != 0
+        return str(article) != 'nan' or str(price) != 'nan' or len(str(article)) != 0 or article != 0 or price != 0.0 or price != 0 or str(price) != ''

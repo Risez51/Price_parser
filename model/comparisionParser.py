@@ -1,10 +1,10 @@
-from model import comparisionItem, fileReader, config
+from model import comparisionItem, fileWorker, config
 
 
 class ComparisionParser:
 
     def __init__(self):
-        self.file_reader = fileReader.FileReader()
+        self.file_reader = fileWorker.FileReader()
         self.cnfg = config.Config()
 
     def get_products_list(self, path_to_file):

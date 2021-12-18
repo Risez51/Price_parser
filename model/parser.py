@@ -1,16 +1,17 @@
-from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileReader, productsComposer, config
+from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileWorker, productsComposer, config
 
 
 class Parser:
 
     def __init__(self):
-        self.fr = fileReader.FileReader()
+        self.fr = fileWorker.FileReader()
 
     def choose_file_parser(self,  file_tag, file_path):
         conf = config.Config()
-        if file_tag == "Отчет чизкейк":
+
+        if file_tag == conf.cheescake_report_name():
             return {file_tag: unloadedCheescakeParser.UnloadedCheescakeParser().get_products_list(file_path)}
-        elif file_tag == "Таблица соответствий":
+        elif file_tag == conf.comparison_report_name():
             return {file_tag: comparisionParser.ComparisionParser().get_products_list(file_path)}
         else:
             return {file_tag: self.parse_supplier(file_path,
