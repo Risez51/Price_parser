@@ -20,9 +20,12 @@ class ComposedItem:
         index = 0
         # итерация по словарю {артикул_поставщика: бренд}
         for supplier_article in supplier_articles_brands_dict:
-            if str(supplier_article) == "nan" or supplier_article == 0 or str(supplier_article) == "0.0" or str(supplier_article) == "0":
+            print(f'is_not_void_product {supplier_article}, {self.is_not_void_product(supplier_article)}')
+            if supplier_article == 'nan' or supplier_article == 0 or supplier_article == '0.0' or supplier_article == '0':
+                print(f'ручная проврка: false ')
                 pass
             else:
+                print(f'ручная проврка: true ')
                 index += 1
                 # итерация по листу с продуктами
                 for product in supplier_products_list:
@@ -37,8 +40,12 @@ class ComposedItem:
                                                                       index))
         return my_dict
 
+
     def is_not_void_product(self, supplier_article):
-        return str(supplier_article) != "nan" or supplier_article != 0 or str(supplier_article) != "0.0" or str(supplier_article) != "0"
+        if supplier_article == 'nan' or supplier_article == 0 or supplier_article == '0.0' or supplier_article == '0':
+            return False
+        else:
+            return True
 
 
     # создает словрь с данными поставщика

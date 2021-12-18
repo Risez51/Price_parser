@@ -30,7 +30,7 @@ class ULCBuilder:
 
     def read_current_data_from_ulc(self):
         result = {}
-        for i in range(0, self.ulc.GetItemCount()):
+        for i in range(self.ulc.GetItemCount()):
             file_name = self.ulc.GetItemText(i)
             sup_name = self.ulc.GetItemWindow(i, 1).GetString(self.ulc.GetItemWindow(i, 1).GetSelection())
             result.update({sup_name: self.view_items.file_name_path_dict.get(file_name)})
