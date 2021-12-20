@@ -1,5 +1,6 @@
 import pandas as pd
 import datetime
+import openpyxl
 
 
 class FileReader:
@@ -21,9 +22,16 @@ class FileWriter:
     def __init__(self, sheet=0):
         self.sheet = sheet
 
-    def to_excel(self, my_data):
-        myDate = datetime.datetime.now()
+    def to_excel_on_one_sheet(self, my_data):
+        my_date = datetime.datetime.now()
+        file_name = f'./Отчет (от {my_date.day}-{my_date.month}-{my_date.year}) (в {my_date.hour}-{my_date.minute}).xlsx'
+        pd.DataFrame(data=my_data).to_excel(file_name, index=False)
 
-        pd.DataFrame(data=my_data).to_excel(
-            f'./Отчет (от {myDate.day}-{myDate.month}-{myDate.year}) (в {myDate.hour}-{myDate.minute}-{myDate.second}).xlsx',
-            index=False)
+    def to_excel_on_several_sheets(self, my_data):
+        my_date = datetime.datetime.now()
+        file_name = f'./Отчет (от {my_date.day}-{my_date.month}-{my_date.year}) (в {my_date.hour}-{my_date.minute}).xlsx'
+        pd.DataFrame(data=[]).to_excel(file_name)
+        with pd.ExcelWriter(file_name, mode='a', engine='openpyxl') as writer:
+            for sheet_name in my_data:
+                pd.DataFrame(data=my_data.get(sheet_name)).to_excel(writer, sheet_name=sheet_name, index=False)
+            writer.book.remove(writer.book['Sheet1'])

@@ -61,14 +61,32 @@ class MyWindow(wx.Frame):
         self.progress_bar = wx.Gauge(self.mainPanel, wx.ID_ANY, range=100, size=(580, 20))
         h_box6.Add(self.progress_bar, proportion=1, flag=wx.EXPAND | wx.RIGHT | wx.LEFT, border=3)
 
+        # RadioGroup
+        v_box65 = wx.BoxSizer(wx.VERTICAL)
+        self.rbox = wx.RadioBox(self.mainPanel, label='Скомпоновать:', pos=(80, 10),
+                                choices=['В 1 файл', 'По группам'],
+                                majorDimension=1, style=wx.RA_SPECIFY_ROWS)
+        v_box65.Add(self.rbox, flag=wx.ALIGN_RIGHT|wx.TOP| wx.RIGHT, border=5)
+
         # Кнопка управление приложением Спарсить/Очистить
         h_box7 = wx.BoxSizer(wx.HORIZONTAL)
-        self.buttonParse = wx.Button(self.mainPanel, wx.ID_ANY, label="Спарсить", size=(90, 30))
+        v_box71 = wx.BoxSizer(wx.VERTICAL)
+        v_box72 = wx.BoxSizer(wx.VERTICAL)
+        v_box73 = wx.BoxSizer(wx.VERTICAL)
+
         self.buttonClearAllUlc = wx.Button(self.mainPanel, wx.ID_ANY, label="Очистить все", size=(90, 30))
         self.buttonDeleteRow = wx.Button(self.mainPanel, wx.ID_ANY, label="Удалить файл", size=(90, 30))
-        h_box7.Add(self.buttonDeleteRow, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10)
-        h_box7.Add(self.buttonClearAllUlc, flag=wx.EXPAND | wx.RIGHT, border=250)
-        h_box7.Add(self.buttonParse, flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=10)
+        self.buttonParse = wx.Button(self.mainPanel, wx.ID_ANY, label="Спарсить", size=(90, 30))
+        #self.buttonTest = wx.Button(self.mainPanel, wx.ID_ANY, label="Test", size=(90, 30))
+
+        v_box71.Add(self.buttonDeleteRow, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
+        #v_box71.Add(self.buttonTest, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
+        v_box72.Add(self.buttonClearAllUlc, flag=wx.ALIGN_LEFT | wx.RIGHT, border=250)
+        v_box73.Add(self.buttonParse, proportion=1 ,flag=wx.ALIGN_RIGHT | wx.LEFT | wx.RIGHT, border=10)
+        h_box7.Add(v_box71, flag=wx.EXPAND)
+        h_box7.Add(v_box72, flag=wx.EXPAND)
+        h_box7.Add(v_box73, flag=wx.EXPAND)
+
 
         # Добавление элементов в главный сайзер приложения VBOX
         self.vbox.Add(v_box1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
@@ -77,7 +95,9 @@ class MyWindow(wx.Frame):
         self.vbox.Add(h_box4, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(h_box5, proportion=1, flag=wx.EXPAND | wx.BOTTOM | wx.TOP, border=10)
         self.vbox.Add(h_box6, flag=wx.EXPAND)
+        self.vbox.Add(v_box65, flag=wx.EXPAND, border=10)
         self.vbox.Add(h_box7, flag=wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
+        #self.vbox.Add(h_box7, flag=wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.TOP, border=10)
 
         # Добавление VBOX на главную панель рабочей области
         self.mainPanel.SetSizer(self.vbox)

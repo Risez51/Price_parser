@@ -26,8 +26,6 @@ class FileDialog:
                 return self.get_dicts_by_dlg(file_dialog)
             elif param == wx.FD_OPEN:
                 return self.get_dict_by_dlg(file_dialog)
-        elif file_dialog.ShowModal() == wx.ID_EXIT:
-            pass
         file_dialog.Destroy()
 
     # На входе файл диалог на выходы словрь {'имя файла': 'путь к файлу'}

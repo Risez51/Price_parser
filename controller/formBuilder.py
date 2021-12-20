@@ -31,5 +31,5 @@ class FormBuilder:
     def del_all_ulc_items(self, ulc):
         ulcBuilder.ULCBuilder(ulc, self.view_items).clear_ulc_items()
 
-    def update_data_from_ulc(self, ulc):
+    def update_view_items_from_ulc(self, ulc):
         ulcBuilder.ULCBuilder(ulc, self.view_items).read_current_data_from_ulc()

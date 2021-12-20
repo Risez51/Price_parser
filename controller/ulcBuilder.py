@@ -9,11 +9,12 @@ class ULCBuilder:
 
     # Добавление строк в UCL виджет из файл диалога
     def add_ulc_items(self, file_dict):
-        all_supplier_list = config.Config().supplier_names
-        self.view_items.file_name_path_dict.update(file_dict)
-        for file_name in file_dict:
-            self.ulc.InsertStringItem(0, file_name)
-            self.ulc.SetItemWindow(0, 1, self.create_combobox_ulc(all_supplier_list), ULC.ULC_ALIGN_LEFT)
+        if file_dict is not None:
+            all_supplier_list = config.Config().supplier_names
+            self.view_items.file_name_path_dict.update(file_dict)
+            for file_name in file_dict:
+                self.ulc.InsertStringItem(0, file_name)
+                self.ulc.SetItemWindow(0, 1, self.create_combobox_ulc(all_supplier_list), ULC.ULC_ALIGN_LEFT)
 
         # Создает комбобоксы для ulc компонента
     def create_combobox_ulc(self, all_supplier_list):

@@ -20,12 +20,7 @@ class ComposedItem:
         index = 0
         # итерация по словарю {артикул_поставщика: бренд}
         for supplier_article in supplier_articles_brands_dict:
-            print(f'is_not_void_product {supplier_article}, {self.is_not_void_product(supplier_article)}')
-            if supplier_article == 'nan' or supplier_article == 0 or supplier_article == '0.0' or supplier_article == '0':
-                print(f'ручная проврка: false ')
-                pass
-            else:
-                print(f'ручная проврка: true ')
+            if self.is_not_void_product(supplier_article):
                 index += 1
                 # итерация по листу с продуктами
                 for product in supplier_products_list:
