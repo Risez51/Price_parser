@@ -1,4 +1,5 @@
-from controller import viewItems, inputBuilder, ulcBuilder, fileDialogBuilder
+from controller import inputBuilder, ulcBuilder, fileDialogBuilder
+from model import viewItems
 
 
 #Класс управления ULC виджетом в приложение

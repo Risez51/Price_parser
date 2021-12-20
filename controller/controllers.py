@@ -1,7 +1,7 @@
-from model import config
+from model import config, resultCreater, viewItems
 import wx
 from view import myWindow
-from controller import formBuilder, viewItems, validator, resultCreater
+from controller import formBuilder, validator
 
 
 class Controllers(object):
@@ -48,10 +48,11 @@ class Controllers(object):
     # Старт парсинга - срабатывает, при нажатие на кнопку "Спарсить"
     def start_parsing(self, event):
         self.frame.progress_bar.SetValue(0)
+        # Если все необходимые файлы существуют и ULC combobox заполнен
         if validator.ViewValidator(self.frame).is_valid():
             # Обновляет данные с вью формы в view_items
             self.form_builder.update_view_items_from_ulc(self.frame.ulc)
-            # создает результирующий файл на 1 листе
+            # создает результирующий файл в зависимости от RadioGroup.Value
             resultCreater.ResultCreator(self.view_items).get_result_excel_file(self.frame.rbox)
             self.frame.progress_bar.SetValue(100)
 
