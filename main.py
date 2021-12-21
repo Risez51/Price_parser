@@ -1,10 +1,10 @@
 import wx
-from controller import controllers
+from controllers import controller
 
 
 def main():
     app = wx.App()
-    controllers.Controllers(app)
+    controller.Controller(app)
     app.MainLoop()
 
 

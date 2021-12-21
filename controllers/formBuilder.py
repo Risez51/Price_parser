@@ -1,4 +1,4 @@
-from controller import inputBuilder, ulcBuilder, fileDialogBuilder
+from controllers import inputBuilder, ulcBuilder, fileDialogBuilder
 from model import viewItems
 
 

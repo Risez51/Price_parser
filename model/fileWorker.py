@@ -33,5 +33,6 @@ class FileWriter:
         pd.DataFrame(data=[]).to_excel(file_name)
         with pd.ExcelWriter(file_name, mode='a', engine='openpyxl') as writer:
             for sheet_name in my_data:
-                pd.DataFrame(data=my_data.get(sheet_name)).to_excel(writer, sheet_name=sheet_name, index=False)
+                if my_data.get(sheet_name):
+                    pd.DataFrame(data=my_data.get(sheet_name)).to_excel(writer, sheet_name=sheet_name, index=False)
             writer.book.remove(writer.book['Sheet1'])

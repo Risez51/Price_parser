@@ -18,7 +18,9 @@ class ProductsComposer:
                                                    self.get_uchItem(comparision_item.holding_article),
                                                    comparision_item,
                                                    self.products_dict.get(supplier_name))
-                result_items_list.append(composed_item.item_data)
+                #добавлять в лист только если компосед итем не пустой словарь
+                if composed_item.item_data:
+                    result_items_list.append(composed_item.item_data)
         return result_items_list
 
     def create_result_for_several_sheets(self):
@@ -34,7 +36,8 @@ class ProductsComposer:
                                                    self.get_uchItem(comparison_item.holding_article),
                                                    comparison_item,
                                                    self.products_dict.get(supplier_name))
-                result_dict.get(comparison_item.holding_group).append(composed_item.item_data)
+                if composed_item.item_data:
+                    result_dict.get(comparison_item.holding_group).append(composed_item.item_data)
         return result_dict
 
     def get_uchItem(self, article):

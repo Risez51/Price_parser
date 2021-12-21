@@ -15,6 +15,7 @@ class ComparisionParser:
             compItem.holding_article = self.fix_str(item[0])
             compItem.holding_group = item[3]
             #Автоключ
+            #compItem.article = str(item[4]).replace(".0", "")
             compItem.avtokluch_article_tehmash = str(item[4]).replace(".0", "")
             compItem.avtokluch_brand_tehmash = item[5]
             compItem.avtokluch_article_kzsmi = str(item[6]).replace(".0", "")
@@ -115,7 +116,7 @@ class ComparisionParser:
     def fix_str(value):
         return str(value).strip()
 
-    #Артикул в прайсе имеет длину 6 (ноли перед артикулом, например 000001), в таблице соответствий
+    #Артикул в прайсе поставщика имеет длину 6 (ноли перед артикулом, например 000001), в таблице соответствий
     #данный артикул хранится со значением 1 - функция дополняет артикул нолями.
     def fix_kem_article(self, article):
         if article != "nan" or article != "0" or article != "":

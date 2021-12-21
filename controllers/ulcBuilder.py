@@ -14,10 +14,10 @@ class ULCBuilder:
             self.view_items.file_name_path_dict.update(file_dict)
             for file_name in file_dict:
                 self.ulc.InsertStringItem(0, file_name)
-                self.ulc.SetItemWindow(0, 1, self.create_combobox_ulc(all_supplier_list), ULC.ULC_ALIGN_LEFT)
+                self.ulc.SetItemWindow(0, 1, self.create_combobox_inside_ulc(all_supplier_list), ULC.ULC_ALIGN_LEFT)
 
         # Создает комбобоксы для ulc компонента
-    def create_combobox_ulc(self, all_supplier_list):
+    def create_combobox_inside_ulc(self, all_supplier_list):
         combobox = wx.Choice(self.ulc)
         combobox.AppendItems(all_supplier_list)
         combobox.Bind(wx.EVT_MOUSEWHEEL, self.do_nothing)
