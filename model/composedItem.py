@@ -19,15 +19,17 @@ class ComposedItem:
             self.item_data.update(holding_dict)
             self.item_data.update(supplier_dict)
 
-    def get_supplier_params(self, supplier_name, supplier_products_list, supplier_articles_brands_dict, holding_price):
+    def get_supplier_params(self, supplier_name, supplier_products_list, comparison_supplier_articles_brands_dict, holding_price):
         my_dict = {}
         # индекс = количеству столбцов с поставщиком в итоговом файле пример: Дарси 1, ..., Дарси n
         index = 0
         # итерация по словарю {артикул_поставщика: бренд} из таблицы соответствий
-        for supplier_article in supplier_articles_brands_dict:
+        #print(supplier_articles_brands_dict)
+        for supplier_article in comparison_supplier_articles_brands_dict:
             if self.is_not_void_product(supplier_article):
                 index += 1
                 # итерация по листу с продуктами
+
                 for product in supplier_products_list:
                     # если артикул_продукта == артикулу_поставщика
                     if product.article == supplier_article:
@@ -35,7 +37,7 @@ class ComposedItem:
                         my_dict.update(self.create_supplier_item_data(supplier_article,
                                                                       product.price,
                                                                       holding_price,
-                                                                      supplier_articles_brands_dict.get(
+                                                                      comparison_supplier_articles_brands_dict.get(
                                                                           supplier_article),
                                                                       supplier_name,
                                                                       index))

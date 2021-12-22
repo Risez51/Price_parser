@@ -98,7 +98,7 @@ class ComparisionItem:
     def get_values(self, supplier_name):
         if supplier_name == "Дарси":
             return self.get_darsi_params()
-        elif supplier_name == "Мир инструментов":
+        elif supplier_name == "Мир инструмента":
             return self.get_mirInstrumentov_params()
         elif supplier_name == "Белый медведь":
             return self.get_whiteBear_params()

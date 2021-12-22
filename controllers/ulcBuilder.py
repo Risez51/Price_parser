@@ -41,5 +41,6 @@ class ULCBuilder:
         self.ulc.DeleteAllItems()
         self.view_items.file_name_path_dict = {}
 
+
     def do_nothing(self, event):
         pass

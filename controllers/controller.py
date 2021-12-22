@@ -51,7 +51,7 @@ class Controller(object):
         # Если все необходимые файлы добавлены на форму
         if validator.ViewValidator(self.frame).is_valid():
             # Обновляет данные с вью формы в view_items
-            self.form_builder.update_view_items_from_ulc(self.frame.ulc)
+            self.form_builder.update_view_items(self.frame.ulc)
             # создает результирующий файл в зависимости от RadioGroup.Value
             resultCreater.ResultCreator(self.view_items).create_result_excel_file(self.frame.rbox)
             self.frame.progress_bar.SetValue(100)

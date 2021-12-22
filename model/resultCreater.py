@@ -23,7 +23,7 @@ class ResultCreator:
         result = productsComposer.ProductsComposer(self.get_result_dict()).create_result_for_several_sheets()
         fileWorker.FileWriter().to_excel_on_several_sheets(result)
 
-    # Возвращает словр
+    # Возвращает словарь {file_tag: parsed_products_list, ..., n}
     def get_result_dict(self):
         result_dict = {}
         for file_tag in self.view_items.file_tag_path_dict:
@@ -34,3 +34,4 @@ class ResultCreator:
                 print(f'{file_tag}: некорректный формат')
                 sys.exit()
         return result_dict
+
