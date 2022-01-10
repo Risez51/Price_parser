@@ -1,5 +1,5 @@
 from wx.lib.agw import ultimatelistctrl as ULC
-from model import config
+from model import config, config_json
 import wx
 
 class ULCBuilder:
@@ -10,7 +10,9 @@ class ULCBuilder:
     # Добавление строк в UCL виджет из файл диалога
     def add_ulc_items(self, file_dict):
         if file_dict is not None:
-            all_supplier_list = config.Config().supplier_names
+            # !!!!!!!!!!!!!!!!!refactor config_json!!!!!!!!!!!!!!!!!!!!!!!
+            #all_supplier_list = config.Config().supplier_names
+            all_supplier_list = config_json.ConfigJson().get_supplier_names_list()
             self.view_items.file_name_path_dict.update(file_dict)
             for file_name in file_dict:
                 self.ulc.InsertStringItem(0, file_name)

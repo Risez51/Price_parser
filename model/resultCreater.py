@@ -16,7 +16,11 @@ class ResultCreator:
     # Cоздает result_file с группами в 1 листе
     def get_result_on_one_excel_sheet(self):
         result = productsComposer.ProductsComposer(self.get_result_dict()).create_result_for_one_sheet()
-        fileWorker.FileWriter().to_excel_on_one_sheet(result)
+        #ликвидность
+        liquidity = fileWorker.FileReader().get_liquidit_data_frame_from_excel(self.view_items.file_tag_path_liquidity_report)
+        fileWorker.FileWriter().to_excel_on_one_sheet_test(result, liquidity)
+        #/ликвидность
+        #fileWorker.FileWriter().to_excel_on_one_sheet(result)
 
     # Cоздает result_file с группами в разных листах
     def get_result_on_several_excel_sheets(self):
@@ -34,4 +38,6 @@ class ResultCreator:
                 print(f'{file_tag}: некорректный формат')
                 sys.exit()
         return result_dict
+
+
 

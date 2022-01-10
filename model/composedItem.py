@@ -1,4 +1,4 @@
-from model import bookkeeper, unloadedCheescakeItem
+from model import bookkeeper
 
 
 class ComposedItem:

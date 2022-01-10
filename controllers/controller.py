@@ -1,4 +1,4 @@
-from model import config, resultCreater, viewItems
+from model import resultCreater, viewItems, config
 import wx
 from view import myWindow
 from controllers import formBuilder, validator
@@ -10,7 +10,6 @@ class Controller(object):
         self.frame = myWindow.MyWindow(None, "Прайс_парсер_1.0")
         self.frame.Center()
         self.frame.Show()
-        self.cnfg = config.Config()
         self.view_items = viewItems.ViewItems()
         self.form_builder = formBuilder.FormBuilder(self.frame, self.view_items)
         # Binds
@@ -19,11 +18,17 @@ class Controller(object):
 
         self.frame.Bind(wx.EVT_BUTTON, self.add_cheescake_report, self.frame.button_cheescake)
         self.frame.Bind(wx.EVT_BUTTON, self.add_comparision_report, self.frame.buttonOpenComparisionFile)
+        self.frame.Bind(wx.EVT_BUTTON, self.add_liquidity_report, self.frame.buttonOpenLiquidityFile)
         self.frame.Bind(wx.EVT_BUTTON, self.update_ulc_items, self.frame.buttonOpenSupplierPrices)
+        self.frame.Bind(wx.EVT_BUTTON, self.test_button, self.frame.buttonTest)
 
         self.frame.Bind(wx.EVT_BUTTON, self.del_focused_ulc_item, self.frame.buttonDeleteRow)
         self.frame.Bind(wx.EVT_BUTTON, self.del_all_ulc_items, self.frame.buttonClearAllUlc)
         self.frame.Bind(wx.EVT_BUTTON, self.start_parsing, self.frame.buttonParse)
+
+
+    def test_button(self,event):
+       print(config.Config().get_liquidity_report_name())
 
     # Добавляет отчет чизкейк на форму
     def add_cheescake_report(self, event):
@@ -32,6 +37,9 @@ class Controller(object):
     # Добавляет таблицу соответствий на форму
     def add_comparision_report(self, event):
         self.form_builder.append_comparison_item(self.frame.input_comparision)
+
+    def add_liquidity_report(self, event):
+        self.form_builder.append_liquidity_item(self.frame.input_liquidity)
 
     # Добавление items в ULC
     def update_ulc_items(self, event):

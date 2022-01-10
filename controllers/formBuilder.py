@@ -25,6 +25,14 @@ class FormBuilder:
         # Обновление label инпута "Таблица соответствий" + обновление значения в view_data
         inputBuilder.InputBuilder(self.view_items).update_input_comparison_label(my_input, file_data)
 
+    def append_liquidity_item(self, my_input):
+        # file_data = {'имя файла': 'путь к файлу'}
+        file_data = fileDialogBuilder.FileDialog(self.frame).open_file()
+        # Обновление label инпута "Таблица соответствий" + обновление значения в view_data
+        inputBuilder.InputBuilder(self.view_items).update_input_liquidity_label(my_input, file_data)
+
+
+
     def append_ulc_items(self, ulc):
         ulcBuilder.ULCBuilder(ulc, self.view_items).add_ulc_items(fileDialogBuilder.FileDialog(self.frame).open_files())
 

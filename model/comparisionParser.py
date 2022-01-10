@@ -1,11 +1,10 @@
-from model import comparisionItem, fileWorker, config
+from model import comparisionItem, fileWorker
 
 
 class ComparisionParser:
 
     def __init__(self):
         self.file_reader = fileWorker.FileReader()
-        self.cnfg = config.Config()
 
     def get_products_list(self, path_to_file):
         comparisionList = []
@@ -15,7 +14,6 @@ class ComparisionParser:
             compItem.holding_article = self.fix_str(item[0])
             compItem.holding_group = item[3]
             #Автоключ
-            #compItem.article = str(item[4]).replace(".0", "")
             compItem.avtokluch_article_tehmash = str(item[4]).replace(".0", "")
             compItem.avtokluch_brand_tehmash = item[5]
             compItem.avtokluch_article_kzsmi = str(item[6]).replace(".0", "")

@@ -20,15 +20,20 @@ class Config:
     def get_price_column_index(self, supplier_name):
         return int(self.config_parser.get('Column_price', supplier_name))
 
-    # Возвращает номер колодки в таблице соответствий
+    # Возвращает номер колонки в таблице соответствий
     def get_comparison_column_index(self, name):
         return int(self.config_parser.get('Comparison_column', name))
 
-    def cheescake_report_name(self):
+    def get_cheescake_report_name(self):
         return str(self.config_parser.get('Reports', 'cheescake_report'))
 
-    def comparison_report_name(self):
+    def get_comparison_report_name(self):
         return str(self.config_parser.get('Reports', 'comparison_report'))
+
+    def get_liquidity_report_name(self):
+        return str(self.config_parser.get('Reports', 'liquidity_report'))
+
+
 
     def get_cheescake_indexes(self):
         uch_indexes = unloadedCheescakeItem.UnloadedCheescakeItem()

@@ -6,8 +6,8 @@ class ProductsComposer:
         self.bookkeeper = bookkeeper.Bookkeeper()
         self.cnfg = config.Config()
         self.products_dict = products_dict
-        self.uchList = self.products_dict.pop(self.cnfg.cheescake_report_name())
-        self.comparisionList = self.products_dict.pop(self.cnfg.comparison_report_name())
+        self.uchList = self.products_dict.pop(self.cnfg.get_cheescake_report_name())
+        self.comparisionList = self.products_dict.pop(self.cnfg.get_comparison_report_name())
 
     def create_result_for_one_sheet(self):
         result_items_list = []

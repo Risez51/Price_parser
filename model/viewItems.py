@@ -7,14 +7,16 @@ class ViewItems:
         self.file_tag_path_dict = {}
         self.file_tag_path_cheescake_report = {}
         self.file_tag_path_comparison_report = {}
+        self.file_tag_path_liquidity_report = ''
 
     def update_cheescake_report(self, file_path):
-        #self.file_tag_path_dict.update({config.Config().cheescake_report_name(): file_path})
-        self.file_tag_path_cheescake_report.update({config.Config().cheescake_report_name(): file_path})
+        self.file_tag_path_cheescake_report.update({config.Config().get_cheescake_report_name(): file_path})
 
     def update_comparison_report(self, file_path):
-        #self.file_tag_path_dict.update({config.Config().comparison_report_name(): file_path})
-        self.file_tag_path_comparison_report.update({config.Config().comparison_report_name(): file_path})
+        self.file_tag_path_comparison_report.update({config.Config().get_comparison_report_name(): file_path})
+
+    def update_liquidity_report(self, file_path):
+        self.file_tag_path_liquidity_report = file_path
 
     @staticmethod
     def get_filename(file_path):

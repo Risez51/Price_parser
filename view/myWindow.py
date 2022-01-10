@@ -17,7 +17,7 @@ class MyWindow(wx.Frame):
         self.mainPanel.SetBackgroundColour(wx.WHITE)
         self.vbox = wx.BoxSizer(wx.VERTICAL)
 
-        # Первая строка (добавление файла: отчет/выгрузка(china2) из CheesCake)
+        # Первая строка (добавление файла: отчет/выгрузка(china2) из Cheesсake)
         v_box1 = wx.BoxSizer(wx.HORIZONTAL)
         label_cheescake = wx.StaticText(self.mainPanel, label="Отчет чизкейк:")
         self.input_cheescake = wx.TextCtrl(self.mainPanel, style=wx.TE_READONLY)
@@ -39,6 +39,15 @@ class MyWindow(wx.Frame):
         h_box2.Add(label_comparision, flag=wx.RIGHT, border=8)
         h_box2.Add(self.input_comparision, proportion=1)
         h_box2.Add(self.buttonOpenComparisionFile, flag=wx.RIGHT | wx.LEFT, border=8)
+
+        # Третья строка (добавление таблицы ликвидности)
+        h_box30 = wx.BoxSizer(wx.HORIZONTAL)
+        label_liquidity = wx.StaticText(self.mainPanel, label="Таблица            \nликвидности:")
+        self.input_liquidity = wx.TextCtrl(self.mainPanel, style=wx.TE_READONLY)
+        self.buttonOpenLiquidityFile = wx.Button(self.mainPanel, wx.ID_ANY, "Добавить")
+        h_box30.Add(label_liquidity, flag=wx.RIGHT, border=8)
+        h_box30.Add(self.input_liquidity, proportion=1)
+        h_box30.Add(self.buttonOpenLiquidityFile, flag=wx.RIGHT | wx.LEFT, border=8)
 
         # Добавление прайсов на лист
         h_box4 = wx.BoxSizer(wx.HORIZONTAL)
@@ -77,12 +86,12 @@ class MyWindow(wx.Frame):
         self.buttonClearAllUlc = wx.Button(self.mainPanel, wx.ID_ANY, label="Очистить все", size=(90, 30))
         self.buttonDeleteRow = wx.Button(self.mainPanel, wx.ID_ANY, label="Удалить файл", size=(90, 30))
         self.buttonParse = wx.Button(self.mainPanel, wx.ID_ANY, label="Спарсить", size=(90, 30))
-        #self.buttonTest = wx.Button(self.mainPanel, wx.ID_ANY, label="Test", size=(90, 30))
+        self.buttonTest = wx.Button(self.mainPanel, wx.ID_ANY, label="Test", size=(90, 30))
 
         v_box71.Add(self.buttonDeleteRow, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
-        #v_box71.Add(self.buttonTest, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
+        v_box71.Add(self.buttonTest, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
         v_box72.Add(self.buttonClearAllUlc, flag=wx.ALIGN_LEFT | wx.RIGHT, border=250)
-        v_box73.Add(self.buttonParse, proportion=1 ,flag=wx.ALIGN_RIGHT | wx.LEFT | wx.RIGHT, border=10)
+        v_box73.Add(self.buttonParse, proportion=1, flag=wx.ALIGN_RIGHT | wx.LEFT | wx.RIGHT, border=10)
         h_box7.Add(v_box71, flag=wx.EXPAND)
         h_box7.Add(v_box72, flag=wx.EXPAND)
         h_box7.Add(v_box73, flag=wx.EXPAND)
@@ -91,6 +100,7 @@ class MyWindow(wx.Frame):
         # Добавление элементов в главный сайзер приложения VBOX
         self.vbox.Add(v_box1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(h_box2, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
+        self.vbox.Add(h_box30, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(h_box3, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(h_box4, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, border=10)
         self.vbox.Add(h_box5, proportion=1, flag=wx.EXPAND | wx.BOTTOM | wx.TOP, border=10)

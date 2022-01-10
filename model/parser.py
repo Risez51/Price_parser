@@ -1,4 +1,4 @@
-from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileWorker, productsComposer, config
+from model import comparisionParser, supplierParser, unloadedCheescakeParser, fileWorker, config
 
 
 class Parser:
@@ -13,9 +13,9 @@ class Parser:
 
     def choose_file_parser(self,  file_tag, file_path):
         conf = config.Config()
-        if file_tag == conf.cheescake_report_name():
+        if file_tag == conf.get_cheescake_report_name():
             return {file_tag: unloadedCheescakeParser.UnloadedCheescakeParser().get_products_list(file_path)}
-        elif file_tag == conf.comparison_report_name():
+        elif file_tag == conf.get_comparison_report_name():
             return {file_tag: comparisionParser.ComparisionParser().get_products_list(file_path)}
         else:
             return {file_tag: self.get_parsed_supplier_products_list(file_path,
