@@ -14,7 +14,7 @@ class FileReader:
     def get_list_from_csv(self, file_path: str):
         return pd.read_csv(file_path, sep=";", engine='python', encoding='latin-1').to_numpy()
 
-    def get_liquidit_data_frame_from_excel(self, file_path: str):
+    def get_liquidity_data_frame_from_excel(self, file_path: str):
         if file_path != '':
             df = pd.read_excel(file_path)
             df['артикул'] = df['артикул'].astype(str)
@@ -31,27 +31,38 @@ class FileWriter:
     def __init__(self, sheet=0):
         self.sheet = sheet
 
-    def to_excel_on_one_sheet(self, my_data):
-        my_date = datetime.datetime.now()
-        file_name = f'./Отчет (от {my_date.day}-{my_date.month}-{my_date.year}) (в {my_date.hour}-{my_date.minute}).xlsx'
-        pd.DataFrame(data=my_data).to_excel(file_name, index=False)
+    def to_excel_on_one_sheet(self, my_data, liquidity_data_frame):
+        self.get_merged_df_with_liquidity_df(pd.DataFrame(data=my_data),
+                                             liquidity_data_frame).to_excel(self.create_file_name(),
+                                                                            index=False)
 
-    def to_excel_on_one_sheet_test(self, my_data, liquidity_data_frame):
-        my_date = datetime.datetime.now()
-        file_name = f'./Отчет (от {my_date.day}-{my_date.month}-{my_date.year}) (в {my_date.hour}-{my_date.minute}).xlsx'
-        if not liquidity_data_frame.empty:
-            df_result_products = pd.DataFrame(data=my_data)
-            my_result_df = pd.merge(df_result_products, liquidity_data_frame, left_on='Холдинг, артикул', right_on='артикул')
-            my_result_df.to_excel(file_name, index=False)
-        else:
-            pd.DataFrame(data=my_data).to_excel(file_name, index=False)
-
-    def to_excel_on_several_sheets(self, my_data):
-        my_date = datetime.datetime.now()
-        file_name = f'./Отчет (от {my_date.day}-{my_date.month}-{my_date.year}) (в {my_date.hour}-{my_date.minute}).xlsx'
+    def to_excel_on_several_sheets(self, my_data_dicts, liquidity_data_frame):
+        file_name = self.create_file_name()
         pd.DataFrame(data=[]).to_excel(file_name)
-        with pd.ExcelWriter(file_name, mode='a', engine='openpyxl') as writer:
-            for sheet_name in my_data:
-                if my_data.get(sheet_name):
-                    pd.DataFrame(data=my_data.get(sheet_name)).to_excel(writer, sheet_name=sheet_name, index=False)
+        with pd.ExcelWriter(file_name,
+                            mode='a',
+                            engine='openpyxl') as writer:
+            for sheet_name in my_data_dicts:
+                if my_data_dicts.get(sheet_name):
+                    self.get_merged_df_with_liquidity_df(pd.DataFrame(data=my_data_dicts.get(sheet_name)),
+                                                         liquidity_data_frame).to_excel(writer,
+                                                                                        sheet_name=sheet_name,
+                                                                                        index=False)
             writer.book.remove(writer.book['Sheet1'])
+
+
+    def create_file_name(self):
+        my_date = datetime.datetime.now()
+        return f'./Отчет (от {my_date.day}-{my_date.month}-{my_date.year}) (в {my_date.hour}-{my_date.minute}).xlsx'
+
+    def get_merged_df_with_liquidity_df(self, df_products, df_liquidity):
+        if not df_liquidity.empty:
+            return pd.merge(df_products,
+                            df_liquidity,
+                            how='left',
+                            left_on='Холдинг, артикул',
+                            right_on='артикул')
+        else:
+            return pd.DataFrame(data=df_products)
+
+

@@ -11,8 +11,8 @@ class ULCBuilder:
     def add_ulc_items(self, file_dict):
         if file_dict is not None:
             # !!!!!!!!!!!!!!!!!refactor config_json!!!!!!!!!!!!!!!!!!!!!!!
-            #all_supplier_list = config.Config().supplier_names
-            all_supplier_list = config_json.ConfigJson().get_supplier_names_list()
+            all_supplier_list = config.Config().supplier_names
+            #all_supplier_list = config_json.ConfigJson().get_supplier_names_list()
             self.view_items.file_name_path_dict.update(file_dict)
             for file_name in file_dict:
                 self.ulc.InsertStringItem(0, file_name)

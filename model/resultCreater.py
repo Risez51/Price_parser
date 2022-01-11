@@ -7,25 +7,27 @@ class ResultCreator:
         self.view_items = view_items
         self.my_parser = parser.Parser()
 
-    def create_result_excel_file(self, radio_box):
-        if radio_box.GetString(radio_box.GetSelection()) == 'В 1 файл':
+    def create_result_excel_file(self):
+        if self.view_items.radiogroup_value == 'В 1 файл':
             self.get_result_on_one_excel_sheet()
-        elif radio_box.GetString(radio_box.GetSelection()) == 'По группам':
+        elif self.view_items.radiogroup_value == 'По группам':
             self.get_result_on_several_excel_sheets()
 
     # Cоздает result_file с группами в 1 листе
     def get_result_on_one_excel_sheet(self):
         result = productsComposer.ProductsComposer(self.get_result_dict()).create_result_for_one_sheet()
         #ликвидность
-        liquidity = fileWorker.FileReader().get_liquidit_data_frame_from_excel(self.view_items.file_tag_path_liquidity_report)
-        fileWorker.FileWriter().to_excel_on_one_sheet_test(result, liquidity)
+        liquidity = fileWorker.FileReader().get_liquidity_data_frame_from_excel(
+            self.view_items.file_tag_path_liquidity_report)
+        fileWorker.FileWriter().to_excel_on_one_sheet(result, liquidity)
         #/ликвидность
-        #fileWorker.FileWriter().to_excel_on_one_sheet(result)
 
     # Cоздает result_file с группами в разных листах
     def get_result_on_several_excel_sheets(self):
         result = productsComposer.ProductsComposer(self.get_result_dict()).create_result_for_several_sheets()
-        fileWorker.FileWriter().to_excel_on_several_sheets(result)
+        liquidity = fileWorker.FileReader().get_liquidity_data_frame_from_excel(
+            self.view_items.file_tag_path_liquidity_report)
+        fileWorker.FileWriter().to_excel_on_several_sheets(result, liquidity)
 
     # Возвращает словарь {file_tag: parsed_products_list, ..., n}
     def get_result_dict(self):
