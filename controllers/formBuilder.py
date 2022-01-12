@@ -51,9 +51,8 @@ class FormBuilder:
     def update_view_item_from_radiogroup(self, radiogroup):
         radioBuilder.RadioBuilder(radiogroup, self.view_items).update_radiogroup_value()
 
-    def update_view_items(self, ulc, radiogroup):
+    def update_view_items(self, ulc):
         self.view_items.file_tag_path_dict = {}
-        self.update_view_item_from_radiogroup(radiogroup)
         self.update_view_items_from_ulc(ulc)
         self.update_view_items_from_inputs()
 

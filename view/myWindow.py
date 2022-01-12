@@ -86,10 +86,10 @@ class MyWindow(wx.Frame):
         self.buttonClearAllUlc = wx.Button(self.mainPanel, wx.ID_ANY, label="Очистить все", size=(90, 30))
         self.buttonDeleteRow = wx.Button(self.mainPanel, wx.ID_ANY, label="Удалить файл", size=(90, 30))
         self.buttonParse = wx.Button(self.mainPanel, wx.ID_ANY, label="Спарсить", size=(90, 30))
-        #self.buttonTest = wx.Button(self.mainPanel, wx.ID_ANY, label="Test", size=(90, 30))
+        self.buttonTest = wx.Button(self.mainPanel, wx.ID_ANY, label="Test", size=(90, 30)) #buttontest
 
         v_box71.Add(self.buttonDeleteRow, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
-        #v_box71.Add(self.buttonTest, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10)
+        v_box71.Add(self.buttonTest, flag=wx.ALIGN_LEFT | wx.LEFT | wx.RIGHT, border=10) #buttontest
         v_box72.Add(self.buttonClearAllUlc, flag=wx.ALIGN_LEFT | wx.RIGHT, border=250)
         v_box73.Add(self.buttonParse, proportion=1, flag=wx.ALIGN_RIGHT | wx.LEFT | wx.RIGHT, border=10)
         h_box7.Add(v_box71, flag=wx.EXPAND)

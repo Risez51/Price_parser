@@ -19,6 +19,10 @@ class ComposedItem:
             self.item_data.update(holding_dict)
             self.item_data.update(supplier_dict)
 
+    def second(self):
+        #метод, который проверяет на существование composedItem в результирующем файле
+        pass
+
     def get_supplier_params(self, supplier_name, supplier_products_list, comparison_supplier_articles_brands_dict, holding_price):
         my_dict = {}
         # индекс = количеству столбцов с поставщиком в итоговом файле пример: Дарси 1, ..., Дарси n

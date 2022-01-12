@@ -19,8 +19,9 @@ class ProductsComposer:
                                                    comparision_item,
                                                    self.products_dict.get(supplier_name))
                 #добавлять в лист только если компосед итем не пустой словарь
-                if composed_item.item_data:
-                    result_items_list.append(composed_item.item_data)
+            #дублировались позиции - решение: вытащил if из for supplier_name in self.products_dict: в for comparision_item in self.comparisionList:
+            if composed_item.item_data:
+                result_items_list.append(composed_item.item_data)
         return result_items_list
 
     def create_result_for_several_sheets(self):
@@ -36,8 +37,9 @@ class ProductsComposer:
                                                    self.get_uchItem(comparison_item.holding_article),
                                                    comparison_item,
                                                    self.products_dict.get(supplier_name))
-                if composed_item.item_data:
-                    result_dict.get(comparison_item.holding_group).append(composed_item.item_data)
+            # дублировались позиции - решение: вытащил if из for supplier_name in self.products_dict: в for comparision_item in self.comparisionList:
+            if composed_item.item_data:
+                result_dict.get(comparison_item.holding_group).append(composed_item.item_data)
         return result_dict
 
     def get_uchItem(self, article):
