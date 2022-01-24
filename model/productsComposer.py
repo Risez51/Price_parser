@@ -39,7 +39,10 @@ class ProductsComposer:
                                                    self.products_dict.get(supplier_name))
             # дублировались позиции - решение: вытащил if из for supplier_name in self.products_dict: в for comparision_item in self.comparisionList:
             if composed_item.item_data:
-                result_dict.get(comparison_item.holding_group).append(composed_item.item_data)
+                # composed_item.item_data - здесь надо добавить среднее арифметическое по цене поставщиков
+
+                #result_dict.get(comparison_item.holding_group).append(composed_item.item_data)
+                result_dict.get(comparison_item.holding_group).append(self.bookkeeper.get_average_price(composed_item.item_data))
         return result_dict
 
     def get_uchItem(self, article):
