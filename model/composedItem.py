@@ -60,6 +60,7 @@ class ComposedItem:
         if supplier_article == '':
             return {}
         else:
+            print(f'supplier_article:{supplier_article}\nsupplier_price:{supplier_price}')
             my_dict = {f'{supplier_name} {brand}, артикул': supplier_article,
                        f'{supplier_name} {brand}, цена': self.bookkeeper.get_price_without_nds(supplier_price),
                        f'{supplier_name} {brand}, разница цен в %': self.bookkeeper.get_procent_difference(

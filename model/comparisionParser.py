@@ -102,6 +102,10 @@ class ComparisionParser:
             compItem.nash_price_brand_skinz = item[73]
             compItem.nash_price_article_minz = str(item[74]).replace(".0", "")
             compItem.nash_price_brand_minz = item[75]
+            #Rinscom
+            compItem.rinscom_article = str(item[78]).replace(".0", "")
+            compItem.rinscom_brand = item[79]
+
 
             comparisionList.append(compItem)
             #Принты для отладки входящих артикулов в файле "Таблица соответствий"

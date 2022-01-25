@@ -94,11 +94,14 @@ class ComparisionItem:
         self.nash_price_brand_skinz = ""
         self.nash_price_article_minz = ""
         self.nash_price_brand_minz = ""
+        # Rinscom
+        self.rinscom_article = ''
+        self.rinscom_brand = ''
 
     def get_values(self, supplier_name):
         if supplier_name == "Дарси":
             return self.get_darsi_params()
-        elif supplier_name == "Мир инструмента":
+        elif supplier_name == "Мир инструментов":
             return self.get_mirInstrumentov_params()
         elif supplier_name == "Белый медведь":
             return self.get_whiteBear_params()
@@ -130,8 +133,11 @@ class ComparisionItem:
             return self.get_dtl_params()
         elif supplier_name == "Наш прайс":
             return self.get_nash_price_params()
+        elif supplier_name == 'Rinscom':
+            return self.get_rinscom_params()
 
-
+    def get_rinscom_params(self):
+        return {self.rinscom_article: self.rinscom_brand}
 
     def get_nash_price_params(self):
         return {self.nash_price_article_skinz: self.nash_price_brand_skinz,

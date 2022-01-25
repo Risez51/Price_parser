@@ -1,4 +1,4 @@
-from model import resultCreater, viewItems, config
+from model import resultCreater, viewItems
 import wx
 from view import myWindow
 from controllers import formBuilder, validator
