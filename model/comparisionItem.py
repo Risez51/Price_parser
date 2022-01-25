@@ -90,16 +90,10 @@ class ComparisionItem:
         self.dtl_article = ""
         self.dtl_brand = ""
         # Наш прайс
-        self.nash_price_article_skinz = ''
-        self.nash_price_brand_skinz = ''
-        self.nash_price_article_minz = ''
-        self.nash_price_brand_minz = ''
-        # МеккаИнструмент
-        self.mekkaInstrument_article = ''
-        self.mekkaInstrument_brand = ''
-        # Rinscom
-        self.rinscom_article = ''
-        self.rinscom_brand = ''
+        self.nash_price_article_skinz = ""
+        self.nash_price_brand_skinz = ""
+        self.nash_price_article_minz = ""
+        self.nash_price_brand_minz = ""
 
     def get_values(self, supplier_name):
         if supplier_name == "Дарси":
@@ -136,22 +130,12 @@ class ComparisionItem:
             return self.get_dtl_params()
         elif supplier_name == "Наш прайс":
             return self.get_nash_price_params()
-        elif supplier_name == 'МеккаИнструмент':
-            return self.get_mekkaInstrument_params()
-        elif supplier_name == 'Rinscom':
-            return self.get_rinscom_params()
 
 
 
     def get_nash_price_params(self):
         return {self.nash_price_article_skinz: self.nash_price_brand_skinz,
                 self.nash_price_article_minz: self.nash_price_brand_minz}
-
-    def get_rinscom_params(self):
-        return {self.rinscom_article: self.rinscom_brand}
-
-    def get_mekkaInstrument_params(self):
-        return {self.mekkaInstrument_article: self.mekkaInstrument_brand}
 
     def get_dtl_params(self):
         return {self.dtl_article: self.dtl_brand}

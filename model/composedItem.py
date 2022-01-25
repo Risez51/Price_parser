@@ -37,6 +37,7 @@ class ComposedItem:
                 for product in supplier_products_list:
                     # если артикул_продукта == артикулу_поставщика
                     if product.article == supplier_article:
+                        #print(f'product.article:{product.article}\nproduct.price:{product.price}\nholding.price:{holding_price}')
                         # добавляем словарь с данными по поставщику: артикул, цену, разницу в цене в %, бренд
                         my_dict.update(self.create_supplier_item_data(supplier_article,
                                                                       product.price,
@@ -59,11 +60,11 @@ class ComposedItem:
         if supplier_article == '':
             return {}
         else:
-            my_dict = {f'{supplier_name} {index}, артикул': supplier_article,
-                       f'{supplier_name} {index}, цена': self.bookkeeper.get_price_without_nds(supplier_price),
-                       f'{supplier_name} {index}, разница цен в %': self.bookkeeper.get_procent_difference(
-                           supplier_price, holding_price),
-                       f'{supplier_name} {index}, бренд': brand}
+            my_dict = {f'{supplier_name} {brand}, артикул': supplier_article,
+                       f'{supplier_name} {brand}, цена': self.bookkeeper.get_price_without_nds(supplier_price),
+                       f'{supplier_name} {brand}, разница цен в %': self.bookkeeper.get_procent_difference(
+                           self.bookkeeper.get_price_without_nds(supplier_price), holding_price),
+                       f'{supplier_name} {brand}, бренд': brand}
             return my_dict
 
     # создает словрь с данными из таблицы соответствия и отчета чизкейк

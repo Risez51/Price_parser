@@ -18,8 +18,8 @@ class FileReader:
         if file_path != '':
             df = pd.read_excel(file_path)
             df['артикул'] = df['артикул'].astype(str)
-            df.drop(['наименование'], axis=1, inplace=True)
-            df.drop(['Цена по прайсу'], axis=1, inplace=True)
+            #df.drop(['наименование'], axis=1, inplace=True)
+            #df.drop(['Цена по прайсу'], axis=1, inplace=True)
             return df
         return pandas.DataFrame()
 
@@ -56,12 +56,14 @@ class FileWriter:
         return f'./Отчет (от {my_date.day}-{my_date.month}-{my_date.year}) (в {my_date.hour}-{my_date.minute}).xlsx'
 
     def get_merged_df_with_liquidity_df(self, df_products, df_liquidity):
+        df_products['Холдинг, артикул'] = df_products['Холдинг, артикул'].astype(str)
         if not df_liquidity.empty:
             return pd.merge(df_products,
                             df_liquidity,
                             how='left',
                             left_on='Холдинг, артикул',
                             right_on='артикул')
+
         else:
             return pd.DataFrame(data=df_products)
 
