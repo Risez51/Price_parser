@@ -14,10 +14,11 @@ class ComposedItem:
                                                        supplier_products_list,
                                                        comparison_item_data.get_values(supplier_name),
                                                    uch_item_data.selling_price))
-        #если словрь поставщика не пустой = добавляем в результирующий словарь
-        if supplier_dict:
-            self.item_data.update(holding_dict)
-            self.item_data.update(supplier_dict)
+        #если словрь поставщика не пустой = добавляем в результирующий словарь, проверка если ли найденные артикула
+        # в supplier_dict
+        #if supplier_dict:
+        self.item_data.update(holding_dict)
+        self.item_data.update(supplier_dict)
 
     def second(self):
         #метод, который проверяет на существование composedItem в результирующем файле
@@ -25,9 +26,11 @@ class ComposedItem:
 
     def get_supplier_params(self, supplier_name, supplier_products_list, comparison_supplier_articles_brands_dict, holding_price):
         my_dict = {}
+        #print(supplier_name)
+
         # индекс = количеству столбцов с поставщиком в итоговом файле пример: Дарси 1, ..., Дарси n
         index = 0
-        # итерация по словарю {артикул_поставщика: бренд} из таблицы соответствий
+      # итерация по словарю {артикул_поставщика: бренд} из таблицы соответствий
         #print(supplier_articles_brands_dict)
         for supplier_article in comparison_supplier_articles_brands_dict:
             if self.is_not_void_product(supplier_article):
@@ -60,7 +63,7 @@ class ComposedItem:
         if supplier_article == '':
             return {}
         else:
-            print(f'supplier_article:{supplier_article}\nsupplier_price:{supplier_price}')
+            #print(f'supplier_article:{supplier_article}\nsupplier_price:{supplier_price}')
             my_dict = {f'{supplier_name} {brand}, артикул': supplier_article,
                        f'{supplier_name} {brand}, цена': self.bookkeeper.get_price_without_nds(supplier_price),
                        f'{supplier_name} {brand}, разница цен в %': self.bookkeeper.get_procent_difference(

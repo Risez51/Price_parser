@@ -14,10 +14,10 @@ class Bookkeeper:
                 if price:
                     count_sup_prices = count_sup_prices + 1
                     total_price = total_price + float(price)
-
-        average_price = total_price / count_sup_prices
-        composed_item_data.update({'Средняя цена поставщиков': f'{average_price:.2f}'.replace('.', ','),
-                                   'Отклонение от средней цены поставщиков': self.get_procent_difference(average_price, composed_item_data.get('Холдинг, цена продажи'))})
+        if count_sup_prices > 0:
+            average_price = total_price / count_sup_prices
+            composed_item_data.update({'Средняя цена поставщиков': f'{average_price:.2f}'.replace('.', ','),
+                                       'Отклонение от средней цены поставщиков': self.get_procent_difference(average_price, composed_item_data.get('Холдинг, цена продажи'))})
 
         return composed_item_data
 
@@ -32,6 +32,8 @@ class Bookkeeper:
         return f'{procent:.2f}%'.replace('.', ',')
 
     def get_price_expenses(self, holding_purchase_price, holding_supplier_brand):
+        if holding_purchase_price == '' or holding_purchase_price == 0:
+            return ''
         if holding_supplier_brand == 'SHAN DONG DONGPING JIUXIN HARDWARE TOOLS CO.,LTD' or \
                 holding_supplier_brand == 'QINGDAO LEAD WORLD IMP&EXP CO., LTD':
 

@@ -20,6 +20,12 @@ class ComparisionItem:
         self.avtokluch_brand_metallist = ""
         self.avtokluch_article_tehnik = ""
         self.avtokluch_brand_tehnik = ""
+        self.avtokluch_article_pavlovo = ''
+        self.avtokluch_brand_pavlovo = ''
+        self.avtokluch_article_liinz = ''
+        self.avtokluch_brand_liinz = ''
+        self.avtokluch_article_kitay = ''
+        self.avtokluch_brand_kitay = ''
         # Дарси
         self.darsi_article_sibin = ""
         self.darsi_brand_sibin = ""
@@ -69,6 +75,8 @@ class ComparisionItem:
         self.inforkom_brand_forsage = ""
         self.inforkom_article_partner = ""
         self.inforkom_brand_partner = ""
+        self.inforkom_article_rockforce = ''
+        self.inforkom_brand_rockforce = ''
         # Волжский инструмент
         self.volzhskij_article = ""
         self.volzhskij_brand = ""
@@ -94,6 +102,9 @@ class ComparisionItem:
         self.nash_price_brand_skinz = ""
         self.nash_price_article_minz = ""
         self.nash_price_brand_minz = ""
+        # МеккаИнструмент
+        self.mekkaInstrument_article = ''
+        self.mekkaInstrument_brand = ''
         # Rinscom
         self.rinscom_article = ''
         self.rinscom_brand = ''
@@ -101,7 +112,7 @@ class ComparisionItem:
     def get_values(self, supplier_name):
         if supplier_name == "Дарси":
             return self.get_darsi_params()
-        elif supplier_name == "Мир инструментов":
+        elif supplier_name == "Мир инструмента":
             return self.get_mirInstrumentov_params()
         elif supplier_name == "Белый медведь":
             return self.get_whiteBear_params()
@@ -135,9 +146,14 @@ class ComparisionItem:
             return self.get_nash_price_params()
         elif supplier_name == 'Rinscom':
             return self.get_rinscom_params()
+        elif supplier_name == 'МеккаИнструмент':
+            return self.get_mekkaInstrument_params()
 
     def get_rinscom_params(self):
         return {self.rinscom_article: self.rinscom_brand}
+
+    def get_mekkaInstrument_params(self):
+        return {self.mekkaInstrument_article: self.mekkaInstrument_brand}
 
     def get_nash_price_params(self):
         return {self.nash_price_article_skinz: self.nash_price_brand_skinz,
@@ -164,7 +180,8 @@ class ComparisionItem:
 
     def get_inforkom_params(self):
         return {self.inforkom_article_forsage: self.inforkom_brand_forsage,
-                self.inforkom_article_partner: self.inforkom_brand_partner}
+                self.inforkom_article_partner: self.inforkom_brand_partner,
+                self.inforkom_article_rockforce: self.inforkom_brand_rockforce}
 
     def get_kem_params(self):
         return {self.kem_article: self.kem_brand}
@@ -182,7 +199,10 @@ class ComparisionItem:
                 self.avtokluch_article_avtodelo: self.avtokluch_brand_avtodelo,
                 self.avtokluch_article_avtom: self.avtokluch_brand_avtom,
                 self.avtokluch_article_metallist: self.avtokluch_brand_metallist,
-                self.avtokluch_article_tehnik: self.avtokluch_brand_tehnik}
+                self.avtokluch_article_tehnik: self.avtokluch_brand_tehnik,
+                self.avtokluch_article_pavlovo: self.avtokluch_brand_pavlovo,
+                self.avtokluch_article_liinz: self.avtokluch_brand_liinz,
+                self.avtokluch_article_kitay: self.avtokluch_brand_kitay}
 
     def get_ipk_params(self):
         return {self.ipk_article: self.ipk_brand}
